@@ -10,12 +10,12 @@ class UsersTableSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('Users')->insert([
-            'email' => 'pelatih@gmail.com',
-            'password' => Hash::make('pelatih123'), 
-            'role' => 'trainer',
-            'created_at' => now(),
-            'updated_at' => now(),
+        DB::table('User')->insert([
+            'email' => 'admin@thunderfitness.com',
+                'password' => Hash::make('admin123'),
+                'role' => 'admin',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
         ]);
     }
 }
