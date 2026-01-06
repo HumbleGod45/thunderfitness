@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>{{ $title ?? 'Admin — Thunder Fitness' }}</title>
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite('resources/css/app.css')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="bg-[#050816] text-white overflow-x-hidden">
