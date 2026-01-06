@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>{{ $pageTitle ?? 'Thunder Fitness' }}</title>
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-slate-100 text-gray-900">
 
