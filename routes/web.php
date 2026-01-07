@@ -9,6 +9,8 @@ use App\Http\Controllers\AdminTrainerController;
 use App\Http\Controllers\TrainerController;
 use App\Http\Controllers\TrainerDashboardController;
 use App\Http\Controllers\TrainerProfileController;
+use App\Http\Controllers\TrainerWorkoutController;
+use App\Http\Controllers\TrainerWorkoutSidebarController;
 use App\Http\Controllers\WorkoutLogController;
 use App\Http\Controllers\MemberWorkoutController;
 use App\Http\Controllers\MemberWorkoutHistoryController;
@@ -110,6 +112,18 @@ Route::middleware(['auth', 'role:trainer'])
 
         Route::put('/profile/reset-password', [TrainerProfileController::class, 'resetPassword'])
             ->name('trainer.profile.reset-password');
+        
+        Route::get('/members/{member}/workouts/create', [TrainerWorkoutController::class, 'create'])
+            ->name('trainer.workouts.create');
+
+        Route::post('/members/{member}/workouts', [TrainerWorkoutController::class, 'store'])
+            ->name('trainer.workouts.store');
+        
+        Route::get('/latihan', [TrainerWorkoutSidebarController::class, 'create'])
+            ->name('trainer.sidebar.workouts.create');
+
+        Route::post('/latihan', [TrainerWorkoutSidebarController::class, 'store'])
+            ->name('trainer.sidebar.workouts.store');
     });
 
 /*

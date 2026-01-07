@@ -103,12 +103,12 @@
                             : 'hover:bg-white/10 hover:text-emerald-400' }}">
                         PROFILE
                     </a>
-                    <a href="/trainer/tbd"
+                    <a href="/trainer/history"
                        class="block px-4 py-2 rounded-lg
-                       {{ request()->is('trainer/tbd*')
+                       {{ request()->is('trainer/history*')
                             ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/40'
                             : 'hover:bg-white/10 hover:text-emerald-400' }}">
-                        TBD
+                        HISTORY
                     </a>
 
                     <hr class="border-white/10 my-4">

@@ -1,9 +1,15 @@
-@extends('layouts.member')
+@extends('layouts.trainer')
 
 @section('content')
-<h1 class="text-2xl font-bold mb-6">Latihan</h1>
+<h1 class="text-2xl font-bold mb-2">Input Latihan Member</h1>
 
-<form id="workoutForm" method="POST" action="{{ route('member.workouts.store') }}">
+<p class="text-sm text-gray-400 mb-6">
+    Member: <span class="font-semibold text-white">{{ $member->nama }}</span>
+</p>
+
+<form id="workoutForm"
+      method="POST"
+      action="{{ route('trainer.workouts.store', $member) }}">
     @csrf
 
     {{-- HEADER --}}
@@ -30,14 +36,13 @@
 
         {{-- EXERCISE ITEM --}}
         <div class="exercise-item relative rounded-2xl bg-[#0A0F24]
-                    border border-white/10 p-5 pt-10 overflow-visible">
-
+            border border-white/10 p-5 pt-10 overflow-visible">
             <button type="button"
                 class="remove-exercise hidden absolute top-3 right-3 z-10
-                       px-3 py-1 rounded-full
-                       border border-red-400/40 text-red-400
-                       text-xs font-semibold
-                       hover:bg-red-500/10 hover:text-red-300">
+                    px-3 py-1 rounded-full
+                    border border-red-400/40 text-red-400
+                    text-xs font-semibold
+                    hover:bg-red-500/10 hover:text-red-300">
                 Hapus
             </button>
 
@@ -68,7 +73,7 @@
             {{-- SET LIST --}}
             <div class="set-wrapper space-y-3">
 
-                <div class="set-item grid grid-cols-2 gap-3 relative">
+                <div class="set-item grid grid-cols-2 gap-3 p-3 relative">
                     <input type="number" min="1" step="1"
                         onkeydown="if(event.key === '-' || event.key === 'e') event.preventDefault()"
                         oninput="if(this.value < 1) this.value = 1"
@@ -84,6 +89,7 @@
                            placeholder="Reps"
                            class="px-3 py-2 rounded-lg bg-[#020617]
                                   border border-white/10 text-white">
+
                     <button type="button"
                             class="remove-set absolute -right-3 -top-3
                                    w-7 h-7 rounded-full bg-red-500/80
@@ -113,37 +119,23 @@
     </div>
 </form>
 
-{{-- SWEETALERT --}}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 {{-- SCRIPT --}}
 <script>
-document.addEventListener('input', e => {
-    if (!e.target.classList.contains('exercise-search')) return;
-
-    const keyword  = e.target.value.toLowerCase();
-    const dropdown = e.target.parentElement.querySelector('.exercise-dropdown');
-    const options  = dropdown.querySelectorAll('.exercise-option');
-
-    dropdown.classList.remove('hidden');
-
-    options.forEach(opt => {
-        const text = opt.innerText.toLowerCase();
-        opt.style.display = text.includes(keyword) ? 'block' : 'none';
-    });
-});
-
 document.addEventListener('DOMContentLoaded', () => {
 
     let exerciseIndex = 0;
     const wrapper = document.getElementById('exerciseWrapper');
     const addExerciseBtn = document.getElementById('addExerciseBtn');
+
     addExerciseBtn.onclick = () => {
         exerciseIndex++;
 
-        const html = `
+        wrapper.insertAdjacentHTML('beforeend', `
         <div class="exercise-item relative rounded-2xl bg-[#0A0F24]
             border border-white/10 p-5 pt-10 overflow-visible">
+
             <button type="button"
                 class="remove-exercise absolute top-3 right-3 z-10
                     px-3 py-1 rounded-full
@@ -208,14 +200,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 + Tambah Set
             </button>
         </div>
-        `;
-
-        wrapper.insertAdjacentHTML('beforeend', html);
+        `);
     };
+
     document.addEventListener('click', e => {
+
         if (e.target.classList.contains('exercise-search')) {
             e.target.nextElementSibling.nextElementSibling.classList.remove('hidden');
         }
+
         if (e.target.classList.contains('exercise-option')) {
             const dropdown = e.target.closest('.exercise-dropdown');
             const search   = dropdown.previousElementSibling.previousElementSibling;
@@ -225,14 +218,16 @@ document.addEventListener('DOMContentLoaded', () => {
             hidden.value = e.target.dataset.id;
             dropdown.classList.add('hidden');
         }
+
         if (e.target.classList.contains('remove-exercise')) {
             e.target.closest('.exercise-item').remove();
         }
+
         if (e.target.classList.contains('addSetBtn')) {
             const setWrapper = e.target.previousElementSibling;
             const setIndex   = setWrapper.children.length;
-            const exercise   = e.target.closest('.exercise-item');
-            const hidden     = exercise.querySelector('input[type="hidden"]');
+            const hidden     = e.target.closest('.exercise-item')
+                               .querySelector('input[type="hidden"]');
             const exIndex    = hidden.name.match(/\[(\d+)\]/)[1];
 
             setWrapper.insertAdjacentHTML('beforeend', `
@@ -259,14 +254,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `);
         }
+
         if (e.target.classList.contains('remove-set')) {
             e.target.closest('.set-item').remove();
         }
     });
 
-    // ==========================
-    // KONFIRMASI SUBMIT
-    // ==========================
+    // konfirmasi submit
     document.getElementById('workoutForm').addEventListener('submit', e => {
         e.preventDefault();
 

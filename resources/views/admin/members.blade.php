@@ -3,26 +3,29 @@
 @section('content')
 @php use Carbon\Carbon; @endphp
 
-<h1 class="text-2xl font-bold mb-6 tracking-wide">Kelola Member</h1>
+<h1 class="text-xl sm:text-2xl font-bold mb-6 tracking-wide">
+    Kelola Member
+</h1>
 
 <div class="rounded-2xl bg-[#0A0F24] border border-white/10
             shadow-[0_20px_60px_rgba(0,0,0,0.6)] overflow-hidden">
 
-    <div class="flex items-center justify-between px-6 py-5 border-b border-white/10">
-        <h2 class="text-lg font-semibold">Data Member</h2>
+    <div class="flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5 border-b border-white/10">
+        <h2 class="text-base sm:text-lg font-semibold">Data Member</h2>
     </div>
 
+    {{-- TABLE --}}
     <div class="overflow-x-auto">
-        <table class="min-w-full text-sm">
+        <table class="min-w-[900px] w-full text-sm">
             <thead class="bg-white/5 border-b border-white/10">
                 <tr>
-                    <th class="px-5 py-3 text-left font-semibold">ID</th>
-                    <th class="px-5 py-3 text-left font-semibold">Nama</th>
-                    <th class="px-5 py-3 text-left font-semibold">No Telp</th>
-                    <th class="px-5 py-3 text-left font-semibold">Status</th>
-                    <th class="px-5 py-3 text-left font-semibold">Expired</th>
-                    <th class="px-5 py-3 text-left font-semibold">PT</th>
-                    <th class="px-5 py-3 text-left font-semibold">Aksi</th>
+                    <th class="px-4 sm:px-5 py-3 text-left font-semibold">ID</th>
+                    <th class="px-4 sm:px-5 py-3 text-left font-semibold">Nama</th>
+                    <th class="px-4 sm:px-5 py-3 text-left font-semibold">No Telp</th>
+                    <th class="px-4 sm:px-5 py-3 text-left font-semibold">Status</th>
+                    <th class="px-4 sm:px-5 py-3 text-left font-semibold">Expired</th>
+                    <th class="px-4 sm:px-5 py-3 text-left font-semibold">PT</th>
+                    <th class="px-4 sm:px-5 py-3 text-left font-semibold">Aksi</th>
                 </tr>
             </thead>
 
@@ -50,36 +53,35 @@
                     @endphp
 
                     <tr class="hover:bg-white/5">
-                        <td class="px-5 py-3">
+                        <td class="px-4 sm:px-5 py-3 whitespace-nowrap">
                             {{ 'TF-' . str_pad($member->id_member, 3, '0', STR_PAD_LEFT) }}
                         </td>
 
-                        <td class="px-5 py-3 font-medium">
+                        <td class="px-4 sm:px-5 py-3 font-medium whitespace-nowrap">
                             {{ $member->nama }}
                         </td>
 
-                        <td class="px-5 py-3">
+                        <td class="px-4 sm:px-5 py-3 whitespace-nowrap">
                             {{ $member->telp ?? '-' }}
                         </td>
 
-                        <td class="px-5 py-3">
+                        <td class="px-4 sm:px-5 py-3">
                             <span class="px-2 py-1 rounded-full text-xs font-semibold {{ $badgeClass }}">
                                 {{ $statusLabel }}
                             </span>
                         </td>
 
-                        <td class="px-5 py-3">
+                        <td class="px-4 sm:px-5 py-3 whitespace-nowrap">
                             {{ $expired ? $expired->translatedFormat('d/m/Y') : '-' }}
                         </td>
 
-                        <td class="px-5 py-3">
+                        <td class="px-4 sm:px-5 py-3 whitespace-nowrap">
                             {{ $member->trainer?->nama ?? '-' }}
                         </td>
 
-                        <td class="px-5 py-3">
-                            <div class="flex items-center gap-3">
+                        <td class="px-4 sm:px-5 py-3">
+                            <div class="flex items-center gap-3 whitespace-nowrap">
 
-                                {{-- EDIT --}}
                                 <button
                                     class="text-emerald-400 text-xs font-semibold hover:underline editMemberBtn"
                                     data-id="{{ $member->id_member }}"
@@ -91,7 +93,6 @@
                                     Edit
                                 </button>
 
-                                {{-- DELETE --}}
                                 @if($canDelete)
                                     <button
                                         class="text-red-400 text-xs font-semibold hover:underline deleteMemberBtn"
@@ -100,9 +101,7 @@
                                         Hapus
                                     </button>
                                 @else
-                                    <span
-                                        class="text-gray-500 text-xs cursor-not-allowed"
-                                        title="Member masih aktif">
+                                    <span class="text-gray-500 text-xs cursor-not-allowed">
                                         Hapus
                                     </span>
                                 @endif
@@ -123,20 +122,22 @@
     </div>
 </div>
 
-{{-- ================= MODAL EDIT MEMBER ================= --}}
+{{-- MODAL --}}
 <div id="editMemberModal"
      class="fixed inset-0 bg-black/70 backdrop-blur-sm
-            flex items-center justify-center z-50 hidden">
+            flex items-center justify-center z-50 hidden px-4">
 
     <div class="bg-[#0A0F24] rounded-2xl border border-white/10
-                w-full max-w-xl p-6 relative">
+                w-full max-w-xl p-5 sm:p-6 relative">
 
         <button id="closeEditMember"
                 class="absolute right-4 top-4 text-gray-400 hover:text-white text-xl">
             ✕
         </button>
 
-        <h2 class="text-lg font-semibold mb-6">Edit Data Member</h2>
+        <h2 class="text-base sm:text-lg font-semibold mb-6">
+            Edit Data Member
+        </h2>
 
         <form id="editMemberForm" method="POST" class="space-y-4">
             @csrf
@@ -154,11 +155,10 @@
                 <label class="block text-xs text-gray-400 mb-1">No Telp</label>
                 <input type="text" name="telp" id="editMemberTelp"
                        class="w-full px-4 py-2 rounded-xl bg-[#020617]
-                              border border-white/10 text-white
-                              focus:ring-2 focus:ring-emerald-500">
+                              border border-white/10 text-white">
             </div>
 
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-xs text-gray-400 mb-1">Tanggal Daftar</label>
                     <input type="date" name="tanggal_daftar" id="editMemberTanggalDaftar"
@@ -203,7 +203,6 @@
         </form>
     </div>
 </div>
-
 {{-- FORM DELETE --}}
 <form id="deleteMemberForm" method="POST" class="hidden">
     @csrf

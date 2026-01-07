@@ -135,39 +135,35 @@
                 @endif
             </div>
         </div>
-    </div>
 
         @if($lastWorkoutDate && $lastWorkout->count())
-            <div class="overflow-x-auto">
-                <table class="min-w-full text-left text-xs md:text-sm">
-                    <thead class="text-gray-400 border-b border-white/10">
-                        <tr>
-                            <th class="py-2 pr-4">Exercise</th>
-                            <th class="py-2 pr-4">Set</th>
-                            <th class="py-2 pr-4">Reps</th>
-                            <th class="py-2 pr-4">Weight</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-white/5 text-gray-100">
-                        @foreach($lastWorkout as $index => $item)
-                            <tr>
-                                <td class="py-2 pr-4 font-medium">
-                                    {{ $item->nama_latihan }}
-                                </td>
-                                <td class="py-2 pr-4">
-                                    Set {{ $index + 1 }}
-                                </td>
-                                <td class="py-2 pr-4">
-                                    {{ $item->reps }}
-                                </td>
-                                <td class="py-2 pr-4">
-                                    {{ $item->beban }} kg
-                                </td>
-                            </tr>
+
+            @php
+                $grouped = $lastWorkout->groupBy('nama_latihan');
+            @endphp
+
+            <div class="space-y-4">
+                @foreach($grouped as $exercise => $sets)
+                <div class="rounded-xl bg-[#020617] border border-white/10 p-4">
+                        {{-- Nama latihan --}}
+                        <p class="font-semibold mb-3">
+                            {{ $exercise }}
+                        </p>
+                    {{-- List set --}}
+                    <div class="space-y-2 text-sm text-gray-300">
+                        @foreach($sets as $index => $set)
+                            <div class="flex justify-between">
+                                <span>Set {{ $index + 1 }}</span>
+                                <span>
+                                    {{ $set->reps }} reps · {{ $set->beban }} kg
+                                </span>
+                            </div>
                         @endforeach
-                    </tbody>
-                </table>
-            </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
         @else
             <div class="text-sm text-gray-400">
                 Belum ada data latihan.

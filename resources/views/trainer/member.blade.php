@@ -43,9 +43,9 @@
                 Detail
             </button>
 
-            <a href="#"
-               class="px-4 py-2 rounded-full bg-emerald-500
-                      text-sm font-semibold hover:bg-emerald-400 transition">
+            <a href="{{ route('trainer.workouts.create', $member->id_member) }}"
+                class="px-4 py-2 rounded-full bg-emerald-500
+                    text-sm font-semibold hover:bg-emerald-400 transition">
                 Latihan
             </a>
         </div>

@@ -1,33 +1,34 @@
 @extends('layouts.main', ['pageTitle' => 'Login — Thunder Fitness'])
 
 @section('content')
-<section class="min-h-screen flex items-center justify-center bg-[#050816] text-white">
-    <div class="w-full max-w-md bg-[#0f172a] rounded-2xl p-8
+<section class="min-h-screen flex items-center justify-center bg-[#050816] text-white px-4">
+    <div class="w-full max-w-md bg-[#0f172a] rounded-2xl
+                p-6 sm:p-8
                 border border-white/10
                 shadow-[0_20px_60px_rgba(0,0,0,0.7)]">
 
         {{-- TITLE --}}
-        <h1 class="text-2xl font-extrabold mb-2 text-center">
+        <h1 class="text-xl sm:text-2xl font-extrabold mb-2 text-center">
             Login Thunder Fitness
         </h1>
-        <p class="text-sm text-gray-400 text-center mb-6">
+        <p class="text-xs sm:text-sm text-gray-400 text-center mb-6">
             Masuk untuk melanjutkan ke dashboard
         </p>
 
         {{-- ERROR --}}
         @if ($errors->any())
-            <div class="mb-4 rounded-lg bg-red-500/10 border border-red-500/20 px-4 py-3 text-sm text-red-300">
+            <div class="mb-4 rounded-lg bg-red-500/10 border border-red-500/20 px-4 py-3 text-xs sm:text-sm text-red-300">
                 {{ $errors->first() }}
             </div>
         @endif
 
         {{-- FORM --}}
-        <form action="{{ route('login.post') }}" method="POST" class="space-y-5">
+        <form action="{{ route('login.post') }}" method="POST" class="space-y-4 sm:space-y-5">
             @csrf
 
             {{-- EMAIL --}}
             <div>
-                <label for="email" class="block text-sm mb-1 text-gray-300">
+                <label for="email" class="block text-xs sm:text-sm mb-1 text-gray-300">
                     Email
                 </label>
                 <input
@@ -36,7 +37,7 @@
                     name="email"
                     value="{{ old('email') }}"
                     required
-                    class="w-full px-3 py-2 rounded-lg
+                    class="w-full px-3 py-2.5 rounded-lg
                            bg-[#020617] border border-gray-700
                            focus:outline-none focus:ring-2 focus:ring-emerald-500
                            text-sm text-white"
@@ -45,7 +46,7 @@
 
             {{-- PASSWORD --}}
             <div>
-                <label for="password" class="block text-sm mb-1 text-gray-300">
+                <label for="password" class="block text-xs sm:text-sm mb-1 text-gray-300">
                     Password
                 </label>
 
@@ -55,7 +56,7 @@
                         id="password"
                         name="password"
                         required
-                        class="w-full px-3 py-2 pr-11 rounded-lg
+                        class="w-full px-3 py-2.5 pr-11 rounded-lg
                                bg-[#020617] border border-gray-700
                                focus:outline-none focus:ring-2 focus:ring-emerald-500
                                text-sm text-white"
