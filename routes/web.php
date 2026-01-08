@@ -6,11 +6,14 @@ use App\Http\Controllers\MemberDashboardController;
 use App\Http\Controllers\MemberProfileController;
 use App\Http\Controllers\AdminMemberController;
 use App\Http\Controllers\AdminTrainerController;
+use App\Http\Controllers\AdminLaporanController;
+use App\Http\Controllers\AdminAnnouncementController;
 use App\Http\Controllers\TrainerController;
 use App\Http\Controllers\TrainerDashboardController;
 use App\Http\Controllers\TrainerProfileController;
 use App\Http\Controllers\TrainerWorkoutController;
 use App\Http\Controllers\TrainerWorkoutSidebarController;
+use App\Http\Controllers\TrainerWorkoutHistoryController;
 use App\Http\Controllers\WorkoutLogController;
 use App\Http\Controllers\MemberWorkoutController;
 use App\Http\Controllers\MemberWorkoutHistoryController;
@@ -64,30 +67,42 @@ Route::post('/logout', [AuthController::class, 'logout'])
 */
 Route::middleware(['auth', 'role:admin'])
     ->prefix('admin')
+    ->name('admin.')
     ->group(function () {
 
+        // HOME / DASHBOARD
         Route::get('/home', [AdminMemberController::class, 'index'])
-            ->name('admin.home');
+            ->name('home');
 
+        // MEMBERS
         Route::get('/members', [AdminMemberController::class, 'index'])
-            ->name('admin.members');
+            ->name('members');
 
         Route::put('/members/{member}', [AdminMemberController::class, 'update'])
-            ->name('admin.members.update');
+            ->name('members.update');
 
+        Route::delete('/members/{member}', [AdminMemberController::class, 'destroy'])
+            ->name('members.destroy');
+
+        // TRAINER
         Route::get('/trainer', [AdminTrainerController::class, 'index'])
-            ->name('admin.trainer');
+            ->name('trainer');
 
         Route::post('/trainer', [AdminTrainerController::class, 'store'])
-            ->name('admin.trainer.store');
+            ->name('trainer.store');
 
         Route::put('/trainer/{trainer}', [AdminTrainerController::class, 'update'])
-            ->name('admin.trainer.update');     
-        
-        Route::delete('/members/{member}', [AdminMemberController::class, 'destroy'])
-            ->name('admin.members.destroy');
+            ->name('trainer.update');
 
+        // LAPORAN
+        Route::get('/laporan', [AdminLaporanController::class, 'index'])
+            ->name('laporan.index');
+
+        // ANNOUNCEMENTS (RESOURCE)
+        Route::resource('announcements', AdminAnnouncementController::class)
+            ->except(['show']);
     });
+
 
 /*
 |-------------------------------------------------------------------------
@@ -124,6 +139,13 @@ Route::middleware(['auth', 'role:trainer'])
 
         Route::post('/latihan', [TrainerWorkoutSidebarController::class, 'store'])
             ->name('trainer.sidebar.workouts.store');
+
+        Route::get('/history', [TrainerWorkoutHistoryController::class, 'index'])
+            ->name('trainer.history.index');
+
+        Route::get('/history/{member}', [TrainerWorkoutHistoryController::class, 'show'])
+            ->name('trainer.history.show');
+
     });
 
 /*

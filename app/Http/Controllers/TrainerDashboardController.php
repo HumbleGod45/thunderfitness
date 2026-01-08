@@ -19,11 +19,17 @@ class TrainerDashboardController extends Controller
         $members = $trainer
             ? $trainer->members()->orderBy('nama')->get()
             : collect();
+        
+        $announcement = Announcement::where('is_active', 1)
+            ->whereIn('target', ['all', 'trainer'])
+            ->latest()
+            ->first();
 
         return view('trainer.member', [
             'title'   => 'Dashboard Trainer',
             'trainer' => $trainer,
             'members' => $members,
+            'announcement'
         ]);
     }
 

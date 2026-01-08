@@ -10,9 +10,35 @@
 <div class="rounded-2xl bg-[#0A0F24] border border-white/10
             shadow-[0_20px_60px_rgba(0,0,0,0.6)] overflow-hidden">
 
-    <div class="flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5 border-b border-white/10">
-        <h2 class="text-base sm:text-lg font-semibold">Data Member</h2>
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between
+            gap-3 px-4 sm:px-6 py-4 sm:py-5 border-b border-white/10">
+
+    <h2 class="text-base sm:text-lg font-semibold">
+        Data Member
+    </h2>
+
+    {{-- SEARCH --}}
+    <div class="relative w-full sm:w-64">
+        <input
+            type="text"
+            id="searchMember"
+            placeholder="Cari member..."
+            class="w-full px-4 py-2 rounded-xl
+                   bg-[#020617] border border-white/10
+                   text-sm text-white
+                   focus:outline-none focus:ring-2 focus:ring-emerald-500"
+        >
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+             class="absolute right-3 top-1/2 -translate-y-1/2
+                    h-4 w-4 text-gray-400 pointer-events-none"
+             fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z"/>
+        </svg>
     </div>
+</div>
+
 
     {{-- TABLE --}}
     <div class="overflow-x-auto">
@@ -145,7 +171,7 @@
 
             <div>
                 <label class="block text-xs text-gray-400 mb-1">Nama</label>
-                <input type="text" name="nama" id="editMemberNama" required
+                <input type="text" name="nama" id="editMemberNama" required readonly
                        class="w-full px-4 py-2 rounded-xl bg-[#020617]
                               border border-white/10 text-white
                               focus:ring-2 focus:ring-emerald-500">
@@ -153,7 +179,7 @@
 
             <div>
                 <label class="block text-xs text-gray-400 mb-1">No Telp</label>
-                <input type="text" name="telp" id="editMemberTelp"
+                <input type="text" name="telp" id="editMemberTelp" readonly
                        class="w-full px-4 py-2 rounded-xl bg-[#020617]
                               border border-white/10 text-white">
             </div>
@@ -254,6 +280,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('editMemberModal');
     const form  = document.getElementById('editMemberForm');
     const deleteForm = document.getElementById('deleteMemberForm');
+    const searchInput = document.getElementById('searchMember');
+    const rows = document.querySelectorAll('tbody tr');
+
+    searchInput.addEventListener('input', () => {
+        const keyword = searchInput.value
+            .toLowerCase()
+            .trim();
+
+        rows.forEach(row => {
+            const rowText = row.innerText
+                .toLowerCase()
+                .replace(/\s+/g, ' ');
+
+            // pecah keyword jadi per kata
+            const words = keyword.split(' ').filter(Boolean);
+
+            // semua kata harus cocok (partial match)
+            const matched = words.every(word => rowText.includes(word));
+            row.style.display = matched ? '' : 'none';
+        });
+    });
+
 
     document.querySelectorAll('.editMemberBtn').forEach(btn => {
         btn.onclick = () => {

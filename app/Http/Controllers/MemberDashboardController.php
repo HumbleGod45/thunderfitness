@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\Announcement;
 use Carbon\Carbon;
 
 class MemberDashboardController extends Controller
@@ -86,6 +87,11 @@ class MemberDashboardController extends Controller
             }
         }
 
+        $announcement = Announcement::where('is_active', 1)
+            ->whereIn('target', ['all', 'member'])
+            ->latest()
+            ->first();
+
         return view('member.home', compact(
             'member',
             'nama',
@@ -102,9 +108,9 @@ class MemberDashboardController extends Controller
             'statusColor',
             'badgeClasses',
             'foto',
-            // 🔥 last workout
             'lastWorkoutDate',
-            'lastWorkout'
+            'lastWorkout',
+            'announcement'
         ));
     }
 }

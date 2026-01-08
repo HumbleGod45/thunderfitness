@@ -46,18 +46,6 @@
                     class="w-full h-[220px] sm:h-[260px] md:h-[320px] object-cover transition-opacity duration-500 ease-in-out"
                 >
             </div>
-
-            {{-- Tombol kiri --}}
-            <button id="prevSlide"
-                class="hidden md:flex absolute left-0 -translate-x-1/2 top-1/2 -translate-y-1/2 text-3xl font-bold text-white/60 hover:text-emerald-400">
-                &larr;
-            </button>
-
-            {{-- Tombol kanan --}}
-            <button id="nextSlide"
-                class="hidden md:flex absolute right-0 translate-x-1/2 top-1/2 -translate-y-1/2 text-3xl font-bold text-white/60 hover:text-emerald-400">
-                &rarr;
-            </button>
         </div>
 
     </div>

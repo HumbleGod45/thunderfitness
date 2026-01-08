@@ -93,21 +93,22 @@
                         TRAINER
                     </a>
 
-                    <a href="/admin/jadwal"
+                    <a href="/admin/laporan"
                        class="block px-4 py-2 rounded-lg
-                       {{ request()->is('admin/jadwal*')
+                       {{ request()->is('admin/laporan*')
                            ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/40'
                            : 'hover:bg-white/10 hover:text-emerald-400' }}">
-                        JADWAL
+                        LAPORAN
                     </a>
 
-                    <a href="/admin/tbd"
-                       class="block px-4 py-2 rounded-lg
-                       {{ request()->is('admin/tbd*')
-                           ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/40'
-                           : 'hover:bg-white/10 hover:text-emerald-400' }}">
-                        TBD
+                    <a href="{{ route('admin.announcements.index') }}"
+                        class="block px-4 py-2 rounded-lg
+                        {{ request()->is('admin/announcements*')
+                            ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/40'
+                            : 'hover:bg-white/10 hover:text-emerald-400' }}">
+                        PENGUMUMAN
                     </a>
+
                 </nav>
             </aside>
 

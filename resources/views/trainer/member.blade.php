@@ -204,4 +204,73 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 </script>
+{{-- ================== POPUP PENGUMUMAN ADMIN ================== --}}
+@if(isset($announcement) && $announcement)
+<div id="announcementModal"
+     class="fixed inset-0 z-[999] hidden items-center justify-center
+            bg-black/70 backdrop-blur-sm">
+
+    <div class="w-full max-w-lg rounded-2xl
+                bg-[#0A0F24] border border-white/10
+                p-6 relative">
+
+        {{-- CLOSE --}}
+        <button id="closeAnnouncement"
+                class="absolute top-4 right-4 text-gray-400 hover:text-white">
+            ✕
+        </button>
+
+        {{-- JUDUL --}}
+        <h2 class="text-xl font-bold mb-4">
+            {{ $announcement->judul }}
+        </h2>
+
+        {{-- ISI --}}
+        <div class="prose prose-invert max-w-none text-sm">
+            {!! $announcement->isi !!}
+        </div>
+
+        <div class="mt-6 text-right">
+            <button id="confirmAnnouncement"
+                    class="px-5 py-2 rounded-lg
+                           bg-emerald-500 hover:bg-emerald-400
+                           text-sm font-semibold">
+                Mengerti
+            </button>
+        </div>
+    </div>
+</div>
+@endif
+
+@if(isset($announcement) && $announcement)
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('announcementModal');
+    if (!modal) return;
+
+    const closeBtn   = document.getElementById('closeAnnouncement');
+    const confirmBtn = document.getElementById('confirmAnnouncement');
+
+    const storageKey = 'announcement_seen_{{ $announcement->id }}';
+
+    // tampilkan hanya jika belum pernah ditutup
+    if (!localStorage.getItem(storageKey)) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    }
+
+    const closeModal = () => {
+        modal.classList.add('hidden');
+        localStorage.setItem(storageKey, '1');
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    confirmBtn.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+});
+</script>
+@endif
 @endsection
