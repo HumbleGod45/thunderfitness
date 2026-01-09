@@ -14,8 +14,7 @@
 
             <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight">
                 Tempat terbaik buat
-                <span class="text-emerald-400">naik level</span>
-                kebugaranmu.
+                <span class="text-emerald-400">naik level</span> kebugaranmu.
             </h1>
 
             <p class="text-sm md:text-base text-gray-400">
@@ -51,13 +50,11 @@
                         shadow-[0_25px_60px_rgba(0,0,0,0.7)]
                         border border-white/5">
 
-                {{-- IMAGE A --}}
                 <img id="sliderImageA"
-                     src="{{ asset('public/images/gym1.jpg') }}"
+                     src="{{ asset('images/gym1.jpg') }}"
                      class="absolute inset-0 w-full h-full object-cover
                             transition-opacity duration-1000 ease-in-out opacity-100">
 
-                {{-- IMAGE B --}}
                 <img id="sliderImageB"
                      src=""
                      class="absolute inset-0 w-full h-full object-cover
@@ -103,15 +100,15 @@
     </div>
 </section>
 
-{{-- ================= SLIDER SCRIPT (SMOOTH) ================= --}}
+{{-- ================= SLIDER SCRIPT ================= --}}
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const images = [
-        "{{ asset('public/images/gym1.jpg') }}",
-        "{{ asset('public/images/gym2.jpg') }}",
-        "{{ asset('public/images/gym3.jpg') }}",
-        "{{ asset('public/images/gym4.jpg') }}",
-        "{{ asset('public/images/gym5.jpg') }}"
+        "{{ asset('images/gym1.jpg') }}",
+        "{{ asset('images/gym2.jpg') }}",
+        "{{ asset('images/gym3.jpg') }}",
+        "{{ asset('images/gym4.jpg') }}",
+        "{{ asset('images/gym5.jpg') }}"
     ];
 
     let index = 0;
