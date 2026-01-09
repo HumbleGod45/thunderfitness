@@ -1,11 +1,12 @@
 @extends('layouts.main', ['pageTitle' => 'Thunder Fitness'])
 
 @section('content')
-{{-- HERO SECTION --}}
+{{-- ================= HERO SECTION ================= --}}
 <section class="w-full bg-[#050816] text-white">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 md:py-20 flex flex-col md:flex-row items-center gap-10">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 md:py-20
+                flex flex-col md:flex-row items-center gap-10">
 
-        {{-- KOLUM TEKS KIRI --}}
+        {{-- TEKS --}}
         <div class="w-full md:w-1/2 space-y-6 text-center md:text-left">
             <p class="uppercase tracking-[0.25em] text-emerald-400 text-xs md:text-sm">
                 Thunder Fitness
@@ -24,34 +25,46 @@
             <div class="flex flex-col sm:flex-row items-center sm:items-baseline gap-4 pt-2">
                 <button
                     onclick="window.location.href='/register'"
-                    class="w-full sm:w-auto inline-flex items-center justify-center rounded-full bg-emerald-500 px-6 py-3 text-sm md:text-base font-semibold hover:bg-emerald-400 transition shadow-lg shadow-emerald-500/30">
+                    class="w-full sm:w-auto inline-flex items-center justify-center
+                           rounded-full bg-emerald-500 px-6 py-3
+                           text-sm md:text-base font-semibold
+                           hover:bg-emerald-400 transition
+                           shadow-lg shadow-emerald-500/30">
                     Daftar Program Nge-Gym!
                 </button>
 
                 <button
                     onclick="window.location.href='/pricelist'"
-                    class="text-sm md:text-base text-gray-300 hover:text-emerald-400 underline-offset-4 hover:underline">
+                    class="text-sm md:text-base text-gray-300
+                           hover:text-emerald-400 hover:underline underline-offset-4">
                     Lihat Paket Member
                 </button>
             </div>
         </div>
 
-        {{-- KOLUM GAMBAR KANAN (SLIDER) --}}
-        <div class="w-full md:w-1/2 relative flex justify-center">
-            <div class="w-full max-w-sm sm:max-w-md rounded-2xl overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.7)] border border-white/5">
-                <img
-                    id="sliderImage"
-                    src="{{ asset('images/gym1.png') }}"
-                    alt="Foto Gym"
-                    class="w-full h-[220px] sm:h-[260px] md:h-[320px] object-cover transition-opacity duration-500 ease-in-out"
-                >
+        {{-- SLIDER FOTO --}}
+        <div class="w-full md:w-1/2 flex justify-center">
+            <div class="relative w-full max-w-sm sm:max-w-md
+                        h-[220px] sm:h-[260px] md:h-[320px]
+                        rounded-2xl overflow-hidden
+                        shadow-[0_25px_60px_rgba(0,0,0,0.7)]
+                        border border-white/5">
+
+                <img id="sliderImageA"
+                     src="{{ asset('images/gym1.jpg') }}"
+                     class="absolute inset-0 w-full h-full object-cover
+                            transition-opacity duration-1000 ease-in-out opacity-100">
+
+                <img id="sliderImageB"
+                     src=""
+                     class="absolute inset-0 w-full h-full object-cover
+                            transition-opacity duration-1000 ease-in-out opacity-0">
             </div>
         </div>
-
     </div>
 </section>
 
-{{-- SECTION KEUNGGULAN --}}
+{{-- ================= KEUNGGULAN ================= --}}
 <section class="w-full bg-[#0A0F24] text-white py-12 md:py-20">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
         <h2 class="text-xl sm:text-2xl md:text-3xl font-bold mb-10 text-center md:text-left">
@@ -63,73 +76,62 @@
                 <div class="text-emerald-400 text-3xl">👥</div>
                 <h3 class="font-semibold text-lg">Trainer Profesional</h3>
                 <p class="text-gray-400 text-sm leading-relaxed">
-                    Dibimbing langsung oleh personal trainer berpengalaman untuk membantu kamu mencapai target latihan dengan lebih efektif.
+                    Dibimbing langsung oleh personal trainer berpengalaman
+                    untuk membantu kamu mencapai target latihan.
                 </p>
             </div>
 
             <div class="flex flex-col gap-3 text-center md:text-left">
                 <div class="text-emerald-400 text-3xl">💰</div>
-                <h3 class="font-semibold text-lg">Nilai Terbaik, Harga Super Hemat</h3>
+                <h3 class="font-semibold text-lg">Harga Bersahabat</h3>
                 <p class="text-gray-400 text-sm leading-relaxed">
-                    Rasakan pengalaman fitness dengan alat-alat yang lengkap dan berkualitas tinggi tanpa menguras kantong.
+                    Alat lengkap dan berkualitas tanpa bikin kantong jebol.
                 </p>
             </div>
 
             <div class="flex flex-col gap-3 text-center md:text-left">
                 <div class="text-emerald-400 text-3xl">📍</div>
-                <h3 class="font-semibold text-lg">Lokasi Strategis & Akses Fleksibel</h3>
+                <h3 class="font-semibold text-lg">Lokasi Strategis</h3>
                 <p class="text-gray-400 text-sm leading-relaxed">
-                    Terletak di lokasi yang mudah diakses di jantung kota Solo. Kami juga buka setiap hari dari jam 06.00 hingga 21.00, memastikan Anda selalu punya waktu untuk berlatih
+                    Lokasi mudah diakses dan jam operasional fleksibel.
                 </p>
             </div>
         </div>
     </div>
 </section>
-{{-- Script slider --}}
+
+{{-- ================= SLIDER SCRIPT ================= --}}
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const images = [
-            "{{ asset('images/gym1.png') }}",
-            "{{ asset('images/gym2.png') }}",
-            "{{ asset('images/gym3.png') }}",
-        ];
+document.addEventListener('DOMContentLoaded', () => {
+    const images = [
+        "{{ asset('images/gym1.jpg') }}",
+        "{{ asset('images/gym2.jpg') }}",
+        "{{ asset('images/gym3.jpg') }}",
+        "{{ asset('images/gym4.jpg') }}",
+        "{{ asset('images/gym5.jpg') }}"
+    ];
 
-        let index   = 0;
-        const imgEl   = document.getElementById('sliderImage');
-        const prevBtn = document.getElementById('prevSlide');
-        const nextBtn = document.getElementById('nextSlide');
-        let timer = null;
+    let index = 0;
+    let showA = true;
 
-        function changeImage(newIndex) {
-            index = (newIndex + images.length) % images.length;
+    const imgA = document.getElementById('sliderImageA');
+    const imgB = document.getElementById('sliderImageB');
 
-            imgEl.classList.add('opacity-0');
-            setTimeout(() => {
-                imgEl.src = images[index];
-                imgEl.classList.remove('opacity-0');
-            }, 250);
+    setInterval(() => {
+        index = (index + 1) % images.length;
+
+        if (showA) {
+            imgB.src = images[index];
+            imgB.classList.replace('opacity-0', 'opacity-100');
+            imgA.classList.replace('opacity-100', 'opacity-0');
+        } else {
+            imgA.src = images[index];
+            imgA.classList.replace('opacity-0', 'opacity-100');
+            imgB.classList.replace('opacity-100', 'opacity-0');
         }
 
-        function startAutoSlide() {
-            if (timer) clearInterval(timer);
-            timer = setInterval(() => {
-                changeImage(index + 1);
-            }, 5000);
-        }
-
-        if (prevBtn && nextBtn) {
-            prevBtn.addEventListener('click', function () {
-                changeImage(index - 1);
-                startAutoSlide();
-            });
-
-            nextBtn.addEventListener('click', function () {
-                changeImage(index + 1);
-                startAutoSlide();
-            });
-        }
-
-        startAutoSlide();
-    });
+        showA = !showA;
+    }, 4500);
+});
 </script>
 @endsection
