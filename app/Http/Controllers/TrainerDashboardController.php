@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Member;
+use App\Models\Announcement;
 use Carbon\Carbon;
 
 class TrainerDashboardController extends Controller

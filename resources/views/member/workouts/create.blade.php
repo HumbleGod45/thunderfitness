@@ -307,7 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // konfirmasi simpan
         Swal.fire({
             title: 'Simpan latihan?',
-            text: 'Latihan akan disimpan untuk member ini.',
+            text: 'Apakah Anda yakin ingin menyimpan latihan ini?',
             showCancelButton: true,
             confirmButtonText: 'Simpan',
             cancelButtonText: 'Batal',

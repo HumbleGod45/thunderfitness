@@ -32,37 +32,27 @@ select:-webkit-autofill {
     box-shadow: 0 0 0px 1000px #020617 inset !important;
     transition: background-color 9999s ease-in-out 0s;
 }
-
-/* ============================
-   CKEDITOR DARK MODE FIX
-   ============================ */
-
-/* area tempat ngetik */
 .ck-editor__editable {
-    background-color: #020617 !important; /* sama kayak input */
+    background-color: #020617 !important; 
     color: #ffffff !important;
     min-height: 180px;
 }
 
-/* toolbar atas */
 .ck-toolbar {
     background-color: #0A0F24 !important;
     border-color: rgba(255, 255, 255, 0.1) !important;
 }
 
-/* tombol & icon di toolbar */
 .ck.ck-button,
 .ck.ck-button svg {
     color: #e5e7eb !important;
 }
 
-/* dropdown (Paragraph, Heading, dll) */
 .ck-dropdown__panel {
     background-color: #0A0F24 !important;
     color: #ffffff !important;
 }
 
-/* focus state */
 .ck-editor__editable:focus {
-    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.5); /* emerald */
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.5); 
 }

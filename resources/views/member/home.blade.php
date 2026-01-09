@@ -200,7 +200,7 @@
                 </div>
             @endif
 
-            <p class="text-sm text-gray-400">Ubah hanya tinggi dan berat badan. Field lain dipindah ke halaman Profile.</p>
+            <p class="text-sm text-gray-400">Ubah tinggi dan berat badan anda.</p>
 
             <div class="grid md:grid-cols-2 gap-4 mt-3">
                 <div>
