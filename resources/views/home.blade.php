@@ -51,7 +51,7 @@
                         border border-white/5">
 
                 <img id="sliderImageA"
-                     src="{{ asset('images/gym1.jpg') }}"
+                     src="{{ asset('images/gym1.JPG') }}"
                      class="absolute inset-0 w-full h-full object-cover
                             transition-opacity duration-1000 ease-in-out opacity-100">
 
@@ -104,11 +104,11 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const images = [
-        "{{ asset('images/gym1.jpg') }}",
-        "{{ asset('images/gym2.jpg') }}",
-        "{{ asset('images/gym3.jpg') }}",
-        "{{ asset('images/gym4.jpg') }}",
-        "{{ asset('images/gym5.jpg') }}"
+        "{{ asset('images/gym1.JPG') }}",
+        "{{ asset('images/gym2.JPG') }}",
+        "{{ asset('images/gym3.JPG') }}",
+        "{{ asset('images/gym4.JPG') }}",
+        "{{ asset('images/gym5.JPG') }}"
     ];
 
     let index = 0;
