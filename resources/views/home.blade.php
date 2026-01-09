@@ -112,26 +112,36 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     let index = 0;
-    let showA = true;
+    let showingA = true;
 
     const imgA = document.getElementById('sliderImageA');
     const imgB = document.getElementById('sliderImageB');
 
-    setInterval(() => {
+    function swapImage() {
         index = (index + 1) % images.length;
 
-        if (showA) {
-            imgB.src = images[index];
-            imgB.classList.replace('opacity-0', 'opacity-100');
-            imgA.classList.replace('opacity-100', 'opacity-0');
-        } else {
-            imgA.src = images[index];
-            imgA.classList.replace('opacity-0', 'opacity-100');
-            imgB.classList.replace('opacity-100', 'opacity-0');
-        }
+        const incoming = showingA ? imgB : imgA;
+        const outgoing = showingA ? imgA : imgB;
 
-        showA = !showA;
-    }, 4500);
+        // preload image dulu
+        const preload = new Image();
+        preload.src = images[index];
+
+        preload.onload = () => {
+            incoming.src = preload.src;
+
+            // fade
+            incoming.classList.remove('opacity-0');
+            incoming.classList.add('opacity-100');
+
+            outgoing.classList.remove('opacity-100');
+            outgoing.classList.add('opacity-0');
+
+            showingA = !showingA;
+        };
+    }
+
+    setInterval(swapImage, 4500);
 });
 </script>
 @endsection
