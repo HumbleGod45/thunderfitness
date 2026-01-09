@@ -42,7 +42,7 @@ class TrainerDashboardController extends Controller
         $trainer = Auth::user()->trainer;
 
         // SECURITY: pastikan member ini memang milik trainer tsb
-        if (! $trainer || $member->trainer_id !== $trainer->id_trainer) {
+        if (! $trainer || ! $trainer->members()->whereKey($member->id_member)->exists()) {
             abort(403, 'Tidak punya akses ke member ini');
         }
 

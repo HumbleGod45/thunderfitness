@@ -27,6 +27,13 @@ class Trainer extends Model
         return $this->belongsTo(User::class, 'users_id_user', 'id_user');
     }
 
+/*************  ✨ Windsurf Command ⭐  *************/
+    /**
+     * Get the members of the trainer.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+/*******  077450d0-5c28-486d-b162-b04a3743f5bd  *******/
     public function members()
     {
         return $this->hasMany(Member::class, 'trainer_id', 'id_trainer');
