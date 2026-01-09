@@ -35,7 +35,7 @@ class TrainerWorkoutHistoryController extends Controller
     public function show(Member $member)
     {
         $trainer = Auth::user()->trainer;
-        if ($member->trainer_id !== $trainer->id_trainer) {
+        if (! $trainer || ! $trainer->members()->whereKey($member->id_member)->exists()) {
             abort(403);
         }
         $members = Member::where('trainer_id', $trainer->id_trainer)
