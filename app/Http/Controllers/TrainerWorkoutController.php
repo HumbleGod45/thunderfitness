@@ -73,7 +73,7 @@ class TrainerWorkoutController extends Controller
         });
 
         return redirect()
-            ->route('trainer.members.detail', $member)
+            ->route('trainer.home')
             ->with('success', 'Latihan berhasil dicatat.');
     }
 }
