@@ -88,6 +88,21 @@
     <main class="min-h-screen">
         @yield('content')
     </main>
+        {{-- FOOTER --}}
+    <footer class="w-full bg-[#050816] text-gray-400">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 py-6
+                    flex flex-col md:flex-row items-center justify-between gap-3 text-sm">
+
+            <p class="text-center md:text-left">
+                © 2026 Thunder Fitness. All rights reserved
+            </p>
+
+            <p class="text-center md:text-right">
+                Developed by <span class="text-emerald-400 font-medium">AFS</span>
+            </p>
+
+        </div>
+    </footer>
 
     {{-- Script toggle menu mobile --}}
     <script>
