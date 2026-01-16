@@ -103,4 +103,31 @@ class AdminTrainerController extends Controller
 
         return back()->with('success', 'Data trainer berhasil diperbarui.');
     }
+    public function destroy($id)
+    {
+        $trainer = Trainer::findOrFail($id);
+        $user = User::find($trainer->users_id_user); // Ambil user terkait
+
+        DB::beginTransaction();
+        try {
+            // 1. Hapus foto jika ada
+            if ($trainer->foto) {
+                Storage::disk('public')->delete($trainer->foto);
+            }
+
+            // 2. Hapus data trainer
+            $trainer->delete();
+
+            // 3. Hapus data user (agar email bisa didaftarkan lagi nantinya)
+            if ($user) {
+                $user->delete();
+            }
+
+            DB::commit();
+            return back()->with('success', 'Trainer dan akun aksesnya berhasil dihapus.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Gagal menghapus: ' . $e->getMessage());
+        }
+    }
 }

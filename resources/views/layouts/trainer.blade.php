@@ -11,25 +11,32 @@
 <body class="bg-[#050816] text-white flex flex-col min-h-screen">
 
 {{-- HEADER --}}
-<header class="w-full bg-[#e9ed81] shadow-md sticky top-0 z-40">
-    <div class="max-w-7xl mx-auto flex items-center justify-between px-4 md:px-6 py-3 md:py-4">
-        <a href="/" class="flex items-center gap-3">
-            <img src="{{ asset('images/thunder.png') }}" class="h-10">
-            <span class="font-semibold text-gray-800 text-lg hidden sm:inline">
+<header class="w-full sticky top-0 z-40
+               bg-[#0A0F24]/90 backdrop-blur
+               border-b border-white/10">
+    <div class="max-w-7xl mx-auto flex items-center justify-between
+                px-4 md:px-6 py-3 md:py-4">
+        {{-- Logo --}}
+        <a href="/"
+           class="flex items-center gap-3 md:ml-6">
+            <img
+                src="{{ asset('images/thunder.png') }}"
+                alt="Logo Thunder Fitness"
+                class="h-10 drop-shadow-[0_0_6px_rgba(250,204,21,0.6)]"
+            >
+            <span class="font-semibold text-white text-lg hidden sm:inline">
                 Thunder Fitness
             </span>
         </a>
-
-        <nav class="hidden md:flex gap-8 text-gray-900 font-medium">
-            <a href="/" class="{{ request()->is('/') ? 'text-emerald-600' : '' }}">Home</a>
-            <a href="/pricelist" class="{{ request()->is('pricelist') ? 'text-emerald-600' : '' }}">Pricelist</a>
-            <a href="/trainer" class="{{ request()->is('trainer') ? 'text-emerald-600' : '' }}">Personal Trainer</a>
-            <a href="/about" class="{{ request()->is('about') ? 'text-emerald-600' : '' }}">Tentang Kami</a>
-        </nav>
-
-        <span class="hidden md:inline text-sm font-semibold text-gray-800">
-            Dashboard Trainer
-        </span>
+        <div class="hidden md:flex items-center gap-4">
+            <span class="text-xs uppercase tracking-widest text-white/30">
+                Trainer Area
+            </span>
+            <span class="h-5 w-px bg-white/10"></span>
+            <span class="text-sm font-medium text-emerald-400">
+                Dashboard
+            </span>
+        </div>
     </div>
 </header>
 
@@ -41,51 +48,77 @@
         @php $trainer = auth()->user()->trainer; @endphp
 
         <aside id="trainerSidebar"
-               class="fixed left-0 top-[64px] md:top-[72px] bottom-0 w-64
-                      bg-[#0A0F24] border-r border-white/10
-                      transition-transform duration-300 z-40
-                      -translate-x-full">
+            class="fixed left-0 top-[64px] md:top-[72px] bottom-0 w-64
+              bg-[#0A0F24] border-r border-white/10
+              transition-transform duration-300 z-40
+              -translate-x-full">
 
-            <div class="flex flex-col items-center py-8 border-b border-white/10">
-                <div class="w-20 h-20 rounded-full overflow-hidden bg-emerald-500/20">
+        {{-- PROFILE --}}
+        <div class="flex flex-col items-center py-8 border-b border-white/10">
+            <div class="relative">
+                <div class="w-20 h-20 rounded-full overflow-hidden
+                        bg-emerald-500/20 ring-2 ring-emerald-500/30">
                     <img src="{{ $trainer && $trainer->foto
                         ? asset('storage/' . $trainer->foto)
                         : asset('images/trainer-default.png') }}"
                         class="w-full h-full object-cover">
                 </div>
-
-                <p class="mt-3 text-sm font-semibold">{{ $trainer->nama ?? 'Trainer' }}</p>
-                <p class="mt-1 text-xs tracking-widest text-emerald-400">TRAINER</p>
             </div>
 
-            <nav class="px-5 py-6 space-y-2 text-sm text-gray-300">
-                <a href="/trainer/home"
-                   class="block px-4 py-2 rounded-lg {{ request()->is('trainer/home*') ? 'bg-emerald-500 text-white' : 'hover:bg-white/10' }}">
-                    MEMBER
-                </a>
-                <a href="/trainer/latihan"
-                   class="block px-4 py-2 rounded-lg {{ request()->is('trainer/latihan*') ? 'bg-emerald-500 text-white' : 'hover:bg-white/10' }}">
-                    LATIHAN
-                </a>
-                <a href="/trainer/profile"
-                   class="block px-4 py-2 rounded-lg {{ request()->is('trainer/profile*') ? 'bg-emerald-500 text-white' : 'hover:bg-white/10' }}">
-                    PROFILE
-                </a>
-                <a href="/trainer/history"
-                   class="block px-4 py-2 rounded-lg {{ request()->is('trainer/history*') ? 'bg-emerald-500 text-white' : 'hover:bg-white/10' }}">
-                    HISTORY
-                </a>
+            <p class="mt-4 text-sm font-semibold text-white">
+                {{ $trainer->nama ?? 'Trainer' }}
+            </p>
+            <p class="mt-1 text-xs tracking-widest text-emerald-400 uppercase">
+                Trainer 
+            </p>
+        </div>
 
-                <hr class="border-white/10 my-4">
+        {{-- MENU --}}
+        <nav class="px-4 py-6 space-y-1 text-sm">
+            <a href="/trainer/home"
+                class="flex items-center gap-3 px-4 py-2.5 rounded-lg
+                  {{ request()->is('trainer/home*')
+                      ? 'bg-emerald-500 text-black font-semibold'
+                      : 'text-gray-300 hover:bg-white/10' }}">
+                MEMBER
+            </a>
 
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button class="w-full text-left px-4 py-2 rounded-lg text-red-400 hover:bg-red-500/10">
-                        KELUAR
-                    </button>
-                </form>
-            </nav>
-        </aside>
+            <a href="/trainer/latihan"
+                class="flex items-center gap-3 px-4 py-2.5 rounded-lg
+                  {{ request()->is('trainer/latihan*')
+                      ? 'bg-emerald-500 text-black font-semibold'
+                      : 'text-gray-300 hover:bg-white/10' }}">
+                LATIHAN
+            </a>
+
+            <a href="/trainer/history"
+                class="flex items-center gap-3 px-4 py-2.5 rounded-lg
+                  {{ request()->is('trainer/history*')
+                      ? 'bg-emerald-500 text-black font-semibold'
+                      : 'text-gray-300 hover:bg-white/10' }}">
+                HISTORY
+            </a>
+
+            <a href="/trainer/profile"
+                class="flex items-center gap-3 px-4 py-2.5 rounded-lg
+                  {{ request()->is('trainer/profile*')
+                      ? 'bg-emerald-500 text-black font-semibold'
+                      : 'text-gray-300 hover:bg-white/10' }}">
+                PROFILE
+            </a>
+            <hr class="border-white/10 my-4">
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button
+                    class="w-full flex items-center gap-3
+                       px-4 py-2.5 rounded-lg
+                       text-red-400 hover:bg-red-500/10 transition">
+                    KELUAR
+                </button>
+            </form>
+        </nav>
+    </aside>
+
 
         {{-- CONTENT + FOOTER --}}
         <div id="trainerWrapper"

@@ -1,172 +1,126 @@
 @extends('layouts.main', ['pageTitle' => 'Pricelist — Thunder Fitness'])
 
 @section('content')
-<section class="w-full bg-[#050816] text-white min-h-screen">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-12 md:py-20">
+<section class="w-full bg-[#050816] text-white min-h-screen relative overflow-hidden">
+    <div class="absolute top-0 -left-20 w-80 h-80 bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="absolute bottom-40 -right-20 w-80 h-80 bg-blue-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-12 md:py-20 relative z-10">
 
         {{-- TITLE --}}
-        <div class="text-center mb-12">
-            <p class="uppercase tracking-[0.25em] text-emerald-400 text-xs md:text-sm">
+        <div class="text-center mb-16">
+            <p class="uppercase tracking-[0.3em] text-emerald-400 text-xs md:text-sm font-bold">
                 Thunder Fitness
             </p>
-            <h1 class="mt-3 text-2xl sm:text-3xl md:text-4xl font-extrabold">
-                Pricelist
+            <h1 class="mt-3 text-3xl sm:text-4xl md:text-5xl font-black tracking-tight">
+                Investasi <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Kesehatanmu</span>
             </h1>
-            <p class="mt-3 text-sm md:text-base text-gray-400 max-w-2xl mx-auto">
-                Pilih paket keanggotaan dan layanan personal trainer yang sesuai
-                dengan kebutuhan dan target latihanmu.
+            <p class="mt-4 text-sm md:text-base text-gray-400 max-w-xl mx-auto leading-relaxed">
+                Pilih paket keanggotaan yang dirancang untuk membantumu mencapai level kebugaran maksimal.
             </p>
         </div>
 
-        <div class="space-y-12">
+        <div class="space-y-16">
 
             {{-- ================= MEMBERSHIP GYM ================= --}}
-            <div class="rounded-2xl bg-[#0A0F24] border border-white/5
-                        shadow-[0_20px_60px_rgba(0,0,0,0.6)]
-                        p-5 sm:p-6 md:p-8">
+            <div>
+                <div class="flex items-center gap-4 mb-8">
+                    <h2 class="text-2xl font-bold italic tracking-tighter uppercase">Membership Gym</h2>
+                    <div class="h-[2px] flex-1 bg-gradient-to-r from-emerald-500/50 to-transparent"></div>
+                </div>
 
-                <h2 class="text-xl sm:text-2xl font-semibold mb-1">
-                    Membership Gym
-                </h2>
-                <p class="text-gray-400 text-sm mb-6">
-                    Akses penuh fasilitas gym Thunder Fitness.
-                </p>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
 
                     {{-- Visit Only --}}
-                    <div class="h-full rounded-xl bg-black/20 border border-white/5 p-4 flex flex-col
-                                transition-all duration-300
-                                hover:-translate-y-1
-                                hover:border-emerald-500/40
-                                hover:shadow-[0_20px_50px_rgba(16,185,129,0.15)]">
-
-                        <p class="font-semibold mb-1">Visit Only</p>
-
-                        <p class="text-gray-400 text-sm flex-1">
-                            Cocok untuk kamu yang ingin coba dulu.
-                        </p>
-
-                        <p class="mt-4 text-emerald-400 font-bold text-lg">
-                            Rp 30.000
-                            <span class="text-sm font-medium text-emerald-300">/ hari</span>
-                        </p>
+                    <div class="group relative rounded-2xl bg-white/[0.03] border border-white/10 p-6 transition-all duration-500 hover:border-emerald-500/50 hover:bg-white/[0.06] hover:-translate-y-2">
+                        <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"></div>
+                        <p class="text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">Daily Pass</p>
+                        <h3 class="text-xl font-bold mb-3">Visit Only</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6">Cocok untuk kamu yang ingin merasakan atmosfer latihan kami.</p>
+                        <div class="mt-auto">
+                            <span class="text-2xl font-black text-emerald-400">Rp 30.000</span>
+                            <span class="text-xs font-medium text-gray-500 uppercase ml-1">/ visit</span>
+                        </div>
                     </div>
 
-                    {{-- Paket Bulanan --}}
-                    <div class="h-full rounded-xl bg-black/20 border border-white/5 p-4 flex flex-col
-                                transition-all duration-300
-                                hover:-translate-y-1
-                                hover:border-emerald-500/40
-                                hover:shadow-[0_20px_50px_rgba(16,185,129,0.15)]">
-
-                        <p class="font-semibold mb-1">Paket Bulanan</p>
-
-                        <p class="text-gray-400 text-sm flex-1">
-                            Akses penuh 1 bulan, fleksibel kapan saja.
-                        </p>
-
-                        <p class="mt-4 text-emerald-400 font-bold text-lg">
-                            Rp 175.000
-                            <span class="text-sm font-medium text-emerald-300">/ bulan</span>
-                        </p>
+                    {{-- Paket Bulanan (BEST VALUE) --}}
+                    <div class="group relative rounded-2xl bg-gradient-to-b from-emerald-500/20 to-emerald-500/[0.02] border-2 border-emerald-500/50 p-6 transition-all duration-500 hover:-translate-y-2 shadow-[0_0_40px_rgba(16,185,129,0.1)]">
+                        <p class="text-emerald-400 text-xs font-bold uppercase tracking-widest mb-2">Full Access</p>
+                        <h3 class="text-xl font-bold mb-3">Paket Bulanan</h3>
+                        <p class="text-emerald-500/70 text-sm leading-relaxed mb-6">Akses tanpa batas selama 30 hari penuh ke seluruh area gym.</p>
+                        <div class="mt-auto">
+                            <span class="text-3xl font-black text-white">Rp 175k</span>
+                            <span class="text-xs font-medium text-emerald-400 uppercase ml-1">/ bulan</span>
+                        </div>
                     </div>
 
                     {{-- Admin New Member --}}
-                    <div class="h-full rounded-xl bg-black/20 border border-white/5 p-4 flex flex-col
-                                transition-all duration-300
-                                hover:-translate-y-1
-                                hover:border-emerald-500/40
-                                hover:shadow-[0_20px_50px_rgba(16,185,129,0.15)]">
-
-                        <p class="font-semibold mb-1">Admin New Member</p>
-
-                        <p class="text-gray-400 text-sm flex-1">
-                            Biaya awal join atau reaktivasi setelah off lebih dari 1 bulan.
-                        </p>
-
-                        <p class="mt-4 text-emerald-400 font-bold text-lg">
-                            Rp 25.000
-                        </p>
+                    <div class="group relative rounded-2xl bg-white/[0.03] border border-white/10 p-6 transition-all duration-500 hover:border-emerald-500/50 hover:bg-white/[0.06] hover:-translate-y-2">
+                        <p class="text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">Registration</p>
+                        <h3 class="text-xl font-bold mb-3">One-time Fee</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6">Biaya pendaftaran member baru atau reaktivasi member lama.</p>
+                        <div class="mt-auto">
+                            <span class="text-2xl font-black text-emerald-400">Rp 25.000</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
             {{-- ================= PERSONAL TRAINER ================= --}}
-            <div class="rounded-2xl bg-[#0A0F24] border border-white/5
-                        shadow-[0_20px_60px_rgba(0,0,0,0.6)]
-                        p-5 sm:p-6 md:p-8">
-
-                <h2 class="text-xl sm:text-2xl font-semibold mb-1">
-                    Personal Trainer
-                </h2>
-                <p class="text-gray-400 text-sm mb-6">
-                    Latihan terarah dengan pendampingan trainer pribadi.
-                </p>
+            <div>
+                <div class="flex items-center gap-4 mb-8">
+                    <h2 class="text-2xl font-bold italic tracking-tighter uppercase">Personal Trainer</h2>
+                    <div class="h-[2px] flex-1 bg-gradient-to-r from-cyan-500/50 to-transparent"></div>
+                </div>
 
                 {{-- ===== SINGLE ===== --}}
-                <h3 class="text-lg font-semibold mb-4">
-                    Single
-                </h3>
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-emerald-400 font-bold uppercase tracking-widest text-sm flex items-center gap-2">
+                        <span class="w-8 h-[1px] bg-emerald-400"></span> Single Program
+                    </h3>
+                </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-12">
                     @foreach([
-                        ['Sesi Percobaan','1x sesi konsultasi & latihan.','Rp 175.000','/ sesi'],
-                        ['Paket 10 Sesi','Ideal untuk memulai program latihan.','Rp 1.500.000','/ paket'],
-                        ['Paket 20 Sesi','Pendampingan intensif bersama trainer.','Rp 2.900.000','/ paket'],
-                        ['Paket 30 Sesi','Program lanjutan untuk hasil maksimal.','Rp 4.200.000','/ paket'],
+                        ['Trial Session','1x Konsultasi','Rp 175k','/ sesi'],
+                        ['Beginner','Paket 10 Sesi','Rp 1.5jt','/ paket'],
+                        ['Intensive','Paket 20 Sesi','Rp 2.9jt','/ paket'],
+                        ['Transformation','Paket 30 Sesi','Rp 4.2jt','/ paket'],
                     ] as [$title,$desc,$price,$unit])
-
-                    <div class="h-full rounded-xl bg-black/20 border border-white/5 p-4 flex flex-col
-                                transition-all duration-300
-                                hover:-translate-y-1
-                                hover:border-emerald-500/40
-                                hover:shadow-[0_20px_50px_rgba(16,185,129,0.15)]">
-
-                        <p class="font-semibold mb-1">{{ $title }}</p>
-                        <p class="text-gray-400 text-sm flex-1">{{ $desc }}</p>
-                        <p class="mt-4 text-emerald-400 font-bold text-lg">
-                            {{ $price }}
-                            <span class="text-sm font-medium text-emerald-300">{{ $unit }}</span>
+                    <div class="group p-5 rounded-2xl bg-[#0A0F24] border border-white/5 hover:border-cyan-500/50 transition-all duration-500">
+                        <h4 class="font-bold text-white mb-1 group-hover:text-cyan-400 transition-colors">{{ $title }}</h4>
+                        <p class="text-gray-500 text-xs mb-4">{{ $desc }}</p>
+                        <p class="text-lg font-black text-white group-hover:scale-105 transition-transform origin-left">
+                            {{ $price }} <span class="text-[10px] text-gray-500 uppercase font-normal">{{ $unit }}</span>
                         </p>
                     </div>
-
                     @endforeach
                 </div>
 
                 {{-- ===== COUPLE ===== --}}
-                <h3 class="text-lg font-semibold mb-4">
-                    Couple
-                </h3>
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-cyan-400 font-bold uppercase tracking-widest text-sm flex items-center gap-2">
+                        <span class="w-8 h-[1px] bg-cyan-400"></span> Couple Program
+                    </h3>
+                </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-
                     @foreach([
-                        ['Sesi Percobaan','1x sesi latihan untuk dua orang.','Rp 295.000','/ sesi'],
-                        ['Paket 10 Sesi','Cocok untuk mulai latihan bareng.','Rp 2.500.000','/ paket'],
-                        ['Paket 20 Sesi','Latihan rutin dengan pendampingan.','Rp 4.900.000','/ paket'],
-                        ['Paket 30 Sesi','Program intensif untuk dua orang.','Rp 7.200.000','/ paket'],
+                        ['Couple Trial','1x Sesi Berdua','Rp 295k','/ sesi'],
+                        ['Duo Start','Paket 10 Sesi','Rp 2.5jt','/ paket'],
+                        ['Duo Routine','Paket 20 Sesi','Rp 4.9jt','/ paket'],
+                        ['Duo Goal','Paket 30 Sesi','Rp 7.2jt','/ paket'],
                     ] as [$title,$desc,$price,$unit])
-
-                    <div class="h-full rounded-xl bg-black/20 border border-white/5 p-4 flex flex-col
-                                transition-all duration-300
-                                hover:-translate-y-1
-                                hover:border-emerald-500/40
-                                hover:shadow-[0_20px_50px_rgba(16,185,129,0.15)]">
-
-                        <p class="font-semibold mb-1">{{ $title }}</p>
-                        <p class="text-gray-400 text-sm flex-1">{{ $desc }}</p>
-                        <p class="mt-4 text-emerald-400 font-bold text-lg">
-                            {{ $price }}
-                            <span class="text-sm font-medium text-emerald-300">{{ $unit }}</span>
+                    <div class="group p-5 rounded-2xl bg-[#0A0F24] border border-white/5 hover:border-emerald-500/50 transition-all duration-500">
+                        <h4 class="font-bold text-white mb-1 group-hover:text-emerald-400 transition-colors">{{ $title }}</h4>
+                        <p class="text-gray-500 text-xs mb-4">{{ $desc }}</p>
+                        <p class="text-lg font-black text-white group-hover:scale-105 transition-transform origin-left">
+                            {{ $price }} <span class="text-[10px] text-gray-500 uppercase font-normal">{{ $unit }}</span>
                         </p>
                     </div>
-
                     @endforeach
                 </div>
             </div>
-
         </div>
     </div>
 </section>

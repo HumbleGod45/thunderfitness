@@ -20,18 +20,27 @@
                 </p>
             </div>
 
-            <div class="flex gap-2">
+            <div class="flex items-center gap-2">
                 <a href="{{ route('admin.announcements.edit', $a) }}"
-                   class="px-3 py-1 text-sm rounded bg-yellow-500/20 text-yellow-300">
+                    class="px-3 py-1.5 text-sm rounded-lg
+                           border border-yellow-400/30
+                         text-yellow-400
+                         hover:bg-yellow-400/10
+                           transition">
                     Edit
                 </a>
 
                 <form method="POST"
-                      action="{{ route('admin.announcements.destroy', $a) }}">
-                    @csrf @method('DELETE')
+                    action="{{ route('admin.announcements.destroy', $a) }}">
+                    @csrf
+                    @method('DELETE')
                     <button type="submit"
-                        class="px-3 py-1 text-sm rounded bg-red-500/20 text-red-300"
-                        onclick="return confirm('Hapus pengumuman?')">
+                        onclick="return confirm('Hapus pengumuman?')"
+                        class="px-3 py-1.5 text-sm rounded-lg
+                               border border-red-400/30
+                             text-red-400
+                             hover:bg-red-400/10
+                               transition">
                         Hapus
                     </button>
                 </form>

@@ -1,7 +1,6 @@
 @extends('layouts.main', ['pageTitle' => 'Thunder Fitness'])
 
 @section('content')
-{{-- ================= HERO SECTION ================= --}}
 <section class="w-full bg-[#050816] text-white">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 md:py-20
                 flex flex-col md:flex-row items-center gap-10">
@@ -65,36 +64,64 @@
 </section>
 
 {{-- ================= KEUNGGULAN ================= --}}
-<section class="w-full bg-[#0A0F24] text-white py-12 md:py-20">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
-        <h2 class="text-xl sm:text-2xl md:text-3xl font-bold mb-10 text-center md:text-left">
-            Kenapa pilih <span class="text-emerald-400">Thunder Fitness?</span>
-        </h2>
+<section class="w-full bg-[#050816] text-white py-16 md:py-24 relative overflow-hidden">
+    {{-- Dekorasi Background --}}
+    <div class="absolute top-0 left-1/4 w-64 h-64 bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none"></div>
+    <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-[100px] pointer-events-none"></div>
 
-        <div class="grid gap-10 md:grid-cols-3">
-            <div class="flex flex-col gap-3 text-center md:text-left">
-                <div class="text-emerald-400 text-3xl">👥</div>
-                <h3 class="font-semibold text-lg">Trainer Profesional</h3>
-                <p class="text-gray-400 text-sm leading-relaxed">
-                    Dibimbing langsung oleh personal trainer berpengalaman
-                    untuk membantu kamu mencapai target latihan.
-                </p>
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+        <div class="text-center md:text-left mb-16">
+            <h2 class="text-3xl md:text-4xl font-black tracking-tight leading-none mb-4">
+                KENAPA HARUS <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">THUNDER FITNESS?</span>
+            </h2>
+            <div class="h-1 w-20 bg-emerald-500 mx-auto md:mx-0 rounded-full"></div>
+        </div>
+
+        <div class="grid gap-8 md:grid-cols-3">
+            {{-- Card 1 --}}
+            <div class="group p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-emerald-500/30 hover:bg-white/[0.04] transition-all duration-500 shadow-2xl relative overflow-hidden">
+                {{-- Glow Effect on Hover --}}
+                <div class="absolute -inset-1 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-2xl blur opacity-0 group-hover:opacity-10 transition-opacity"></div>
+                
+                <div class="relative z-10">
+                    <div class="w-14 h-14 rounded-xl bg-emerald-500/10 flex items-center justify-center text-3xl mb-6 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
+                        👥
+                    </div>
+                    <h3 class="font-bold text-xl mb-3 group-hover:text-emerald-400 transition-colors">Trainer Profesional</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Dibimbing langsung oleh personal trainer berpengalaman untuk membantu kamu mencapai target latihan secara terukur.
+                    </p>
+                </div>
             </div>
 
-            <div class="flex flex-col gap-3 text-center md:text-left">
-                <div class="text-emerald-400 text-3xl">💰</div>
-                <h3 class="font-semibold text-lg">Harga Bersahabat</h3>
-                <p class="text-gray-400 text-sm leading-relaxed">
-                    Alat lengkap dan berkualitas tanpa bikin kantong jebol.
-                </p>
+            {{-- Card 2 --}}
+            <div class="group p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-emerald-500/30 hover:bg-white/[0.04] transition-all duration-500 shadow-2xl relative overflow-hidden">
+                <div class="absolute -inset-1 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-2xl blur opacity-0 group-hover:opacity-10 transition-opacity"></div>
+                
+                <div class="relative z-10">
+                    <div class="w-14 h-14 rounded-xl bg-emerald-500/10 flex items-center justify-center text-3xl mb-6 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
+                        💰
+                    </div>
+                    <h3 class="font-bold text-xl mb-3 group-hover:text-emerald-400 transition-colors">Harga Bersahabat</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Nikmati fasilitas alat yang lengkap, modern, dan berkualitas tinggi tanpa perlu khawatir bikin kantong kamu jebol.
+                    </p>
+                </div>
             </div>
 
-            <div class="flex flex-col gap-3 text-center md:text-left">
-                <div class="text-emerald-400 text-3xl">📍</div>
-                <h3 class="font-semibold text-lg">Lokasi Strategis</h3>
-                <p class="text-gray-400 text-sm leading-relaxed">
-                    Lokasi mudah diakses dan jam operasional fleksibel.
-                </p>
+            {{-- Card 3 --}}
+            <div class="group p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-emerald-500/30 hover:bg-white/[0.04] transition-all duration-500 shadow-2xl relative overflow-hidden">
+                <div class="absolute -inset-1 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-2xl blur opacity-0 group-hover:opacity-10 transition-opacity"></div>
+                
+                <div class="relative z-10">
+                    <div class="w-14 h-14 rounded-xl bg-emerald-500/10 flex items-center justify-center text-3xl mb-6 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
+                        📍
+                    </div>
+                    <h3 class="font-bold text-xl mb-3 group-hover:text-emerald-400 transition-colors">Lokasi Strategis</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Berada di pusat kota yang sangat mudah diakses dengan dukungan jam operasional yang fleksibel sesuai jadwalmu.
+                    </p>
+                </div>
             </div>
         </div>
     </div>

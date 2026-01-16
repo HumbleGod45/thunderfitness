@@ -83,19 +83,17 @@
                 <div class="set-item grid grid-cols-2 gap-3 relative">
                     <input type="number" min="1" step="1"
                         onkeydown="if(event.key === '-' || event.key === 'e') event.preventDefault()"
-                        oninput="if(this.value < 1) this.value = 1"
-                           name="exercises[0][sets][0][beban]"
-                           placeholder="Beban (kg)"
-                           class="px-3 py-2 rounded-lg bg-[#020617]
-                                  border border-white/10 text-white">
+                        oninput="if(this.value !== '' && this.value < 1) this.value = 1"
+                        name="exercises[0][sets][0][beban]"
+                        placeholder="Beban (kg)"
+                        class="px-3 py-2 rounded-lg bg-[#020617] border border-white/10 text-white">
 
                     <input type="number" min="1" step="1"
                         onkeydown="if(event.key === '-' || event.key === 'e') event.preventDefault()"
-                        oninput="if(this.value < 1) this.value = 1"
-                           name="exercises[0][sets][0][reps]"
-                           placeholder="Reps"
-                           class="px-3 py-2 rounded-lg bg-[#020617]
-                                  border border-white/10 text-white">
+                        oninput="if(this.value !== '' && this.value < 1) this.value = 1"
+                        name="exercises[0][sets][0][reps]"
+                        placeholder="Reps"
+                        class="px-3 py-2 rounded-lg bg-[#020617] border border-white/10 text-white">
                 </div>
             </div>
 
@@ -171,19 +169,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="set-item grid grid-cols-2 gap-3 relative">
                     <input type="number" min="1" step="1"
                         onkeydown="if(event.key === '-' || event.key === 'e') event.preventDefault()"
-                        oninput="if(this.value < 1) this.value = 1"
-                           name="exercises[0][sets][0][beban]"
-                           placeholder="Beban (kg)"
-                           class="px-3 py-2 rounded-lg bg-[#020617]
-                                  border border-white/10 text-white">
+                        oninput="if(this.value !== '' && this.value < 1) this.value = 1"
+                        name="exercises[0][sets][0][beban]"
+                        placeholder="Beban (kg)"
+                        class="px-3 py-2 rounded-lg bg-[#020617] border border-white/10 text-white">
 
                     <input type="number" min="1" step="1"
                         onkeydown="if(event.key === '-' || event.key === 'e') event.preventDefault()"
-                        oninput="if(this.value < 1) this.value = 1"
-                           name="exercises[0][sets][0][reps]"
-                           placeholder="Reps"
-                           class="px-3 py-2 rounded-lg bg-[#020617]
-                                  border border-white/10 text-white">
+                        oninput="if(this.value !== '' && this.value < 1) this.value = 1"
+                        name="exercises[0][sets][0][reps]"
+                        placeholder="Reps"
+                        class="px-3 py-2 rounded-lg bg-[#020617] border border-white/10 text-white">
                 </div>
             </div>
 
@@ -198,6 +194,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // =============================
     // EVENT DELEGATION
     // =============================
+    document.addEventListener('click', e => {
+        if (!e.target.classList.contains('exercise-search') && !e.target.closest('.exercise-dropdown')) {
+            document.querySelectorAll('.exercise-dropdown').forEach(d => d.classList.add('hidden'));
+        }
+    });
     document.addEventListener('click', e => {
 
         if (e.target.classList.contains('exercise-search')) {

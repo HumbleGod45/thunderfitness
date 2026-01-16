@@ -113,12 +113,11 @@
                                     data-id="{{ $member->id_member }}"
                                     data-nama="{{ $member->nama }}"
                                     data-telp="{{ $member->telp }}"
-                                    data-tanggal_daftar="{{ $member->tanggal_daftar }}"
-                                    data-aktif_hingga="{{ $member->aktif_hingga }}"
+                                    data-tanggal_daftar="{{ $member->tanggal_daftar ? Carbon::parse($member->tanggal_daftar)->format('Y-m-d') : '' }}"
+                                    data-aktif_hingga="{{ $member->aktif_hingga ? Carbon::parse($member->aktif_hingga)->format('Y-m-d') : '' }}"
                                     data-trainer_id="{{ $member->trainer_id }}">
                                     Edit
                                 </button>
-
                                 @if($canDelete)
                                     <button
                                         class="text-red-400 text-xs font-semibold hover:underline deleteMemberBtn"

@@ -17,32 +17,35 @@
 @endphp
 
 {{-- HEADER --}}
-<header class="w-full bg-[#e9ed81] shadow-md sticky top-0 z-40">
-    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4 px-4 md:px-6 py-3 md:py-4">
-        <a href="/" class="flex items-center gap-3">
-            <img src="{{ asset('images/thunder.png') }}" class="h-10">
-            <span class="font-semibold text-gray-800 text-lg hidden sm:inline">
+<header class="w-full sticky top-0 z-40
+               bg-[#0A0F24]/90 backdrop-blur
+               border-b border-white/10">
+    <div class="max-w-7xl mx-auto flex items-center justify-between
+                px-4 md:px-6 py-3 md:py-4">
+
+        {{-- Logo --}}
+        <a href="/"
+           class="flex items-center gap-3 md:ml-6">
+            <img
+                src="{{ asset('images/thunder.png') }}"
+                alt="Logo Thunder Fitness"
+                class="h-10 drop-shadow-[0_0_6px_rgba(250,204,21,0.6)]"
+            >
+            <span class="font-semibold text-white text-lg hidden sm:inline">
                 Thunder Fitness
             </span>
         </a>
-
-        <nav class="hidden md:flex items-center gap-8 text-gray-900 font-medium">
-            <a href="/" class="hover:text-emerald-600">Home</a>
-            <a href="/pricelist" class="hover:text-emerald-600">Pricelist</a>
-            <a href="/trainer" class="hover:text-emerald-600">Personal Trainer</a>
-            <a href="/about" class="hover:text-emerald-600">Tentang Kami</a>
-        </nav>
-
-        <div class="flex items-center gap-3">
-            <span class="hidden md:inline text-sm font-semibold text-gray-800">
-                Dashboard Member
+        
+        <div class="hidden md:flex items-center gap-4">
+            <span class="text-xs uppercase tracking-widest text-white/30">
+                Member Area
             </span>
-            <div class="h-8 w-8 rounded-full bg-violet-200 flex items-center justify-center">
-                <span class="text-violet-700 text-sm font-semibold">
-                    {{ $initial }}
-                </span>
-            </div>
+            <span class="h-5 w-px bg-white/10"></span>
+            <span class="text-sm font-medium text-emerald-400">
+                Dashboard
+            </span>
         </div>
+
     </div>
 </header>
 
@@ -70,21 +73,50 @@
                 </p>
             </div>
 
-            <nav class="px-5 py-6 space-y-2 text-sm">
-                <a href="/member/home" class="block px-4 py-2 rounded-lg hover:bg-white/10">HOME</a>
-                <a href="/member/workouts/create" class="block px-4 py-2 rounded-lg hover:bg-white/10">LATIHAN</a>
-                <a href="/member/profile" class="block px-4 py-2 rounded-lg hover:bg-white/10">PROFILE</a>
-                <a href="/member/workouts/history" class="block px-4 py-2 rounded-lg hover:bg-white/10">HISTORY</a>
+            <nav class="px-4 py-6 space-y-1 text-sm">
+                <a href="/member/home"
+                    class="flex items-center px-4 py-2.5 rounded-lg
+                        {{ request()->is('member/home*')
+                        ? 'bg-emerald-500 text-black font-semibold'
+                        : 'text-gray-300 hover:bg-white/10' }}">
+                    HOME
+                </a>
 
+                <a href="/member/workouts/create"
+                    class="flex items-center px-4 py-2.5 rounded-lg
+                        {{ request()->is('member/workouts/create*')
+                        ? 'bg-emerald-500 text-black font-semibold'
+                        : 'text-gray-300 hover:bg-white/10' }}">
+                    LATIHAN
+                </a>
+
+                <a href="/member/workouts/history"
+                    class="flex items-center px-4 py-2.5 rounded-lg
+                        {{ request()->is('member/workouts/history*')
+                        ? 'bg-emerald-500 text-black font-semibold'
+                        : 'text-gray-300 hover:bg-white/10' }}">
+                    HISTORY
+                </a>
+
+                <a href="/member/profile"
+                    class="flex items-center px-4 py-2.5 rounded-lg
+                        {{ request()->is('member/profile*')
+                        ? 'bg-emerald-500 text-black font-semibold'
+                        : 'text-gray-300 hover:bg-white/10' }}">
+                    PROFILE
+                </a>
                 <hr class="border-white/10 my-4">
 
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
-                    <button class="w-full text-left px-4 py-2 rounded-lg text-red-400 hover:bg-red-500/10">
+                    <button
+                        class="w-full flex items-center px-4 py-2.5 rounded-lg
+                            text-red-400 hover:bg-red-500/10 transition">
                         KELUAR
-                    </button>
+                    </button>   
                 </form>
             </nav>
+
         </aside>
 
         {{-- CONTENT --}}

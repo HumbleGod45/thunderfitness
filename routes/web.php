@@ -94,6 +94,8 @@ Route::middleware(['auth', 'role:admin'])
         Route::put('/trainer/{trainer}', [AdminTrainerController::class, 'update'])
             ->name('trainer.update');
 
+        Route::delete('/trainer/{id}', [AdminTrainerController::class, 'destroy'])
+            ->name('trainer.destroy');
         // LAPORAN
         Route::get('/laporan', [AdminLaporanController::class, 'index'])
             ->name('laporan.index');

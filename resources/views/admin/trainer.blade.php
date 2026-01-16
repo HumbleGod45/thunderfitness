@@ -61,6 +61,13 @@
             data-foto="{{ $trainer->foto ? asset('storage/'.$trainer->foto) : asset('images/trainer-default.png') }}">
             Edit
         </button>
+        {{-- HAPUS (Tambahkan ini) --}}
+        <button
+            class="px-3 py-1 text-xs rounded-lg border border-red-500/30 text-red-400 hover:bg-red-500/10 deleteTrainerBtn"
+            data-id="{{ $trainer->id_trainer }}"
+            data-nama="{{ $trainer->nama }}">
+            Hapus
+        </button>
     </div>
 </div>
 @empty
@@ -68,34 +75,95 @@
 @endforelse
 
 
-{{-- ================= MODAL ADD TRAINER ================= --}}
-<div id="addTrainerModal" class="fixed inset-0 bg-black/70 flex items-center justify-center z-50 hidden">
-    <div class="bg-[#0A0F24] rounded-2xl border border-white/10 w-full max-w-lg p-6 relative">
-        <button id="closeAddTrainer" class="absolute right-4 top-4 text-gray-400 hover:text-white">✕</button>
+{{-- ================= MODAL ADD TRAINER (REVISED) ================= --}}
+<div id="addTrainerModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 hidden px-4">
+    <div class="bg-[#0A0F24] rounded-2xl border border-white/10 w-full max-w-2xl p-6 sm:p-8 relative max-h-[95vh] overflow-y-auto">
+        
+        {{-- Tombol Close --}}
+        <button id="closeAddTrainer" class="absolute right-5 top-5 text-gray-400 hover:text-white transition-colors text-xl">✕</button>
 
-        <h2 class="text-lg font-semibold mb-4">Tambah Personal Trainer</h2>
+        <h2 class="text-xl font-bold mb-8 text-white tracking-tight">Tambah Personal Trainer</h2>
 
-        <form action="{{ route('admin.trainer.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+        <form action="{{ route('admin.trainer.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
-            <div class="flex gap-4">
-                <div class="w-20 h-20 rounded-xl bg-emerald-500/10 overflow-hidden">
-                    <img id="previewTrainerFoto" src="{{ asset('images/trainer-default.png') }}"
-                         class="w-full h-full object-cover">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                {{-- BAGIAN FOTO (KIRI) --}}
+                <div class="flex flex-col items-center gap-4">
+                    <div class="relative group">
+                        <div class="w-32 h-32 rounded-2xl bg-emerald-500/5 border-2 border-dashed border-emerald-500/20 overflow-hidden flex items-center justify-center transition-all group-hover:border-emerald-500/50">
+                            <img id="previewTrainerFoto" src="{{ asset('images/trainer-default.png') }}"
+                                 class="w-full h-full object-cover">
+                        </div>
+                        {{-- Overlay Upload --}}
+                        <label for="fotoInput" class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer rounded-2xl">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                        </label>
+                    </div>
+                    <p class="text-[10px] text-gray-500 text-center uppercase tracking-widest font-bold">Foto Profil</p>
+                    <input id="fotoInput" type="file" name="foto" class="hidden" onchange="previewTrainerImage(event)">
                 </div>
-                <input type="file" name="foto" onchange="previewTrainerImage(event)">
+
+                {{-- BAGIAN FORM (KANAN) --}}
+                <div class="md:col-span-2 space-y-5">
+                    
+                    {{-- Baris 1: Email & Password --}}
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="text-[11px] text-gray-500 uppercase font-bold ml-1">Email Login</label>
+                            <input type="email" name="email" required placeholder="email@gym.com" 
+                                   class="w-full mt-1.5 px-4 py-2.5 rounded-xl bg-[#020617] border border-white/5 text-white text-sm focus:ring-2 focus:ring-emerald-500/50 outline-none transition-all">
+                        </div>
+                        <div>
+                            <label class="text-[11px] text-gray-500 uppercase font-bold ml-1">Password</label>
+                            <input type="password" name="password" required placeholder="••••••••" 
+                                   class="w-full mt-1.5 px-4 py-2.5 rounded-xl bg-[#020617] border border-white/5 text-white text-sm focus:ring-2 focus:ring-emerald-500/50 outline-none transition-all">
+                        </div>
+                    </div>
+
+                    {{-- Baris 2: Nama --}}
+                    <div>
+                        <label class="text-[11px] text-gray-500 uppercase font-bold ml-1">Nama Lengkap</label>
+                        <input type="text" name="nama" required placeholder="Contoh: Arnold Schwarzenegger" 
+                               class="w-full mt-1.5 px-4 py-2.5 rounded-xl bg-[#020617] border border-white/5 text-white text-sm focus:ring-2 focus:ring-emerald-500/50 outline-none transition-all">
+                    </div>
+
+                    {{-- Baris 3: Spesialis & Pengalaman --}}
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="text-[11px] text-gray-500 uppercase font-bold ml-1">Spesialisasi</label>
+                            <input type="text" name="spesialis" required placeholder="Contoh: Fat Loss" 
+                                   class="w-full mt-1.5 px-4 py-2.5 rounded-xl bg-[#020617] border border-white/5 text-white text-sm focus:ring-2 focus:ring-emerald-500/50 outline-none transition-all">
+                        </div>
+                        <div>
+                            <label class="text-[11px] text-gray-500 uppercase font-bold ml-1">Pengalaman (Tahun)</label>
+                            <input type="number" name="pengalaman_tahun" required placeholder="5" 
+                                   class="w-full mt-1.5 px-4 py-2.5 rounded-xl bg-[#020617] border border-white/5 text-white text-sm focus:ring-2 focus:ring-emerald-500/50 outline-none transition-all">
+                        </div>
+                    </div>
+
+                    {{-- Baris 4: No Telp --}}
+                    <div>
+                        <label class="text-[11px] text-gray-500 uppercase font-bold ml-1">Nomor Telepon</label>
+                        <input type="text" name="telp" required placeholder="08xx xxxx xxxx" 
+                               class="w-full mt-1.5 px-4 py-2.5 rounded-xl bg-[#020617] border border-white/5 text-white text-sm focus:ring-2 focus:ring-emerald-500/50 outline-none transition-all">
+                    </div>
+                </div>
             </div>
 
-            <input type="email" name="email" placeholder="Email Login" required class="input-dark">
-            <input type="password" name="password" placeholder="Password" required class="input-dark">
-            <input type="text" name="nama" placeholder="Nama Trainer" required class="input-dark">
-            <input type="text" name="spesialis" placeholder="Spesialis" required class="input-dark">
-            <input type="number" name="pengalaman_tahun" placeholder="Pengalaman (tahun)" required class="input-dark">
-            <input type="text" name="telp" placeholder="No Telp" required class="input-dark">
-
-            <div class="flex justify-end gap-3">
-                <button type="button" id="cancelAddTrainer" class="btn-outline">Batal</button>
-                <button type="submit" class="btn-primary">Simpan</button>
+            {{-- FOOTER TOMBOL --}}
+            <div class="flex justify-end gap-3 mt-10 pt-6 border-t border-white/5">
+                <button type="button" id="cancelAddTrainer" 
+                        class="px-6 py-2.5 rounded-xl border border-white/10 text-gray-400 font-semibold hover:bg-white/5 hover:text-white transition-all text-sm">
+                    Batal
+                </button>
+                <button type="submit" 
+                        class="px-8 py-2.5 rounded-xl bg-emerald-500 text-[#050816] font-bold hover:bg-emerald-400 transition-all shadow-lg shadow-emerald-500/20 text-sm">
+                    Simpan Trainer
+                </button>
             </div>
         </form>
     </div>
@@ -191,7 +259,11 @@
         </form>
     </div>
 </div>
-
+{{-- FORM DELETE TERSEMBUNYI --}}
+<form id="deleteTrainerForm" method="POST" class="hidden">
+    @csrf
+    @method('DELETE')
+</form>
 
 
 {{-- ================= SWEETALERT ================= --}}
@@ -203,6 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const addModal = document.getElementById('addTrainerModal');
     const editModal = document.getElementById('editTrainerModal');
     const editForm = document.getElementById('editTrainerForm');
+    const deleteForm = document.getElementById('deleteTrainerForm');
 
     openAddTrainer.onclick = () => addModal.classList.remove('hidden');
     closeAddTrainer.onclick = cancelAddTrainer.onclick = () => addModal.classList.add('hidden');
@@ -220,20 +293,48 @@ document.addEventListener('DOMContentLoaded', () => {
             editModal.classList.remove('hidden');
         };
     });
-
-    document.querySelectorAll('.showMembersBtn').forEach(btn => {
+   document.querySelectorAll('.deleteTrainerBtn').forEach(btn => {
         btn.onclick = () => {
-            const members = JSON.parse(btn.dataset.members);
+            const id = btn.dataset.id;
+            const nama = btn.dataset.nama;
+
             Swal.fire({
-                title: `Member Trainer ${btn.dataset.trainer}`,
-                html: members.length
-                    ? members.map(m => `<p>${m.nama}</p>`).join('')
-                    : 'Belum ada member',
+                title: 'Hapus Trainer?',
+                text: `Yakin ingin menghapus "${nama}"? Data akses login juga akan terhapus.`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#EF4444',
+                cancelButtonColor: '#374151',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal',
                 background: '#0A0F24',
-                color: '#E5E7EB'
+                color: '#fff'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Sekarang deleteForm sudah dikenal karena didefinisikan di atas
+                    deleteForm.action = `/admin/trainer/${id}`;
+                    deleteForm.submit();
+                }
             });
         };
     });
+    document.querySelectorAll('.showMembersBtn').forEach(btn => {
+    btn.onclick = () => {
+        const members = JSON.parse(btn.dataset.members);
+        Swal.fire({
+            title: `Member Trainer ${btn.dataset.trainer}`,
+            html: members.length
+                ? `<div class="text-left space-y-2 mt-4 max-h-60 overflow-y-auto pr-2">
+                    ${members.map(m => `<div class="p-3 bg-white/5 rounded-xl border border-white/5 text-sm text-gray-200">👤 ${m.nama}</div>`).join('')}
+                   </div>`
+                : '<p class="text-gray-500 mt-4 italic text-sm">Belum ada member yang dibimbing.</p>',
+            background: '#0A0F24', // Samakan warnanya
+            color: '#fff',         // Teks putih
+            confirmButtonColor: '#10B981', // Tombol OK warna emerald
+            confirmButtonText: 'Tutup'
+        });
+    };
+});
 });
 
 function previewTrainerImage(e) {
@@ -253,10 +354,13 @@ function previewEditTrainerImage(event) {
 Swal.fire({
     title: 'Berhasil 🎉',
     text: '{{ session('success') }}',
+    icon: 'success',
+    background: '#0A0F24',
+    color: '#fff',        
     timer: 2000,
-    showConfirmButton: false
+    showConfirmButton: false,
+    iconColor: '#10B981'  
 });
 </script>
 @endif
-
 @endsection

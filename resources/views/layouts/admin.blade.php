@@ -11,31 +11,40 @@
 
 <body class="bg-[#050816] text-white overflow-x-hidden flex flex-col min-h-screen">
 
-{{-- NAVBAR --}}
-<header class="w-full bg-[#e9ed81] shadow-md sticky top-0 z-40">
-    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4 px-4 md:px-6 py-3 md:py-4">
-        <a href="/" class="flex items-center gap-3">
-            <img src="{{ asset('images/thunder.png') }}" alt="Logo" class="h-10">
-            <span class="font-semibold text-gray-800 text-lg hidden sm:inline">
+{{-- HEADER --}}
+<header class="w-full sticky top-0 z-40
+               bg-[#0A0F24]/90 backdrop-blur
+               border-b border-white/10">
+    <div class="max-w-7xl mx-auto flex items-center justify-between
+                px-4 md:px-6 py-3 md:py-4">
+
+        {{-- Logo --}}
+        <a href="/"
+           class="flex items-center gap-3 md:ml-6">
+            <img
+                src="{{ asset('images/thunder.png') }}"
+                alt="Logo Thunder Fitness"
+                class="h-10 drop-shadow-[0_0_6px_rgba(250,204,21,0.6)]"
+            >
+            <span class="font-semibold text-white text-lg hidden sm:inline">
                 Thunder Fitness
             </span>
         </a>
 
-        <nav class="hidden md:flex items-center gap-8 text-gray-900 font-medium">
-            <a href="/" class="{{ request()->is('/') ? 'text-emerald-600' : '' }}">Home</a>
-            <a href="/pricelist" class="{{ request()->is('pricelist') ? 'text-emerald-600' : '' }}">Pricelist</a>
-            <a href="/trainer" class="{{ request()->is('trainer') ? 'text-emerald-600' : '' }}">Personal Trainer</a>
-            <a href="/about" class="{{ request()->is('about') ? 'text-emerald-600' : '' }}">Tentang Kami</a>
-        </nav>
+        {{-- Accent --}}
+        <div class="hidden md:flex items-center gap-4">
+            <span class="text-xs uppercase tracking-widest text-white/30">
+                Admin Area
+            </span>
+            <span class="h-5 w-px bg-white/10"></span>
+            <span class="text-sm font-medium text-emerald-400">
+                Dashboard
+            </span>
+        </div>
 
-        <form action="{{ route('logout') }}" method="POST">
-            @csrf
-            <button class="px-4 py-2 rounded-full bg-white/80 text-gray-900 text-sm font-semibold">
-                Keluar
-            </button>
-        </form>
     </div>
 </header>
+
 
 {{-- MAIN --}}
 <main class="flex-1 bg-[#050816]">
@@ -63,24 +72,37 @@
 
             <nav class="px-5 py-6 space-y-2 text-sm">
                 <a href="{{ route('admin.members') }}"
-                   class="block px-4 py-2 rounded-lg {{ request()->is('admin/members*') ? 'bg-emerald-500' : 'hover:bg-white/10' }}">
+                class="block px-4 py-2 rounded-lg {{ request()->is('admin/members*') ? 'bg-emerald-500 text-black font-semibold' : 'hover:bg-white/10' }}">
                     MEMBER
                 </a>
+
                 <a href="/admin/trainer"
-                   class="block px-4 py-2 rounded-lg {{ request()->is('admin/trainers*') ? 'bg-emerald-500' : 'hover:bg-white/10' }}">
+                class="block px-4 py-2 rounded-lg {{ request()->is('admin/trainers*') ? 'bg-emerald-500 text-black font-semibold' : 'hover:bg-white/10' }}">
                     TRAINER
                 </a>
+
                 <a href="/admin/laporan"
-                   class="block px-4 py-2 rounded-lg {{ request()->is('admin/laporan*') ? 'bg-emerald-500' : 'hover:bg-white/10' }}">
+                class="block px-4 py-2 rounded-lg {{ request()->is('admin/laporan*') ? 'bg-emerald-500 text-black font-semibold' : 'hover:bg-white/10' }}">
                     LAPORAN
                 </a>
+
                 <a href="{{ route('admin.announcements.index') }}"
-                   class="block px-4 py-2 rounded-lg {{ request()->is('admin/announcements*') ? 'bg-emerald-500' : 'hover:bg-white/10' }}">
+                class="block px-4 py-2 rounded-lg {{ request()->is('admin/announcements*') ? 'bg-emerald-500 text-black font-semibold' : 'hover:bg-white/10' }}">
                     PENGUMUMAN
                 </a>
-            </nav>
-        </aside>
+                <hr class="border-white/10 my-4">
 
+                {{-- Logout --}}
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button
+                        class="w-full text-left px-4 py-2 rounded-lg
+                        text-red-400 hover:bg-red-500/10 transition">
+                        KELUAR
+                    </button>
+                </form>
+            </nav>  
+        </aside>
         {{-- CONTENT + FOOTER WRAPPER --}}
         <div id="adminContentWrapper"
              class="flex-1 flex flex-col transition-all duration-300">
