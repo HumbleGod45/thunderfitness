@@ -50,7 +50,7 @@ class MemberWorkoutController extends Controller
             foreach ($exercise['sets'] as $set) {
                 DB::table('workout_logs')->insert([
                     'id_member'   => $member->id_member,
-                    'id_trainer'  => null, // karena member input sendiri
+                    'id_trainer'  => null, 
                     'id_workout'  => $exercise['workout_id'],
                     'tanggal'     => $request->tanggal,
                     'jumlah_set'  => $jumlahSet,

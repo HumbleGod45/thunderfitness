@@ -10,7 +10,6 @@ class RoleMiddleware
 {
     public function handle(Request $request, Closure $next, ...$roles)
     {
-        // belum login → lempar ke login
         if (! Auth::check()) {
             return redirect()->route('login');
         }

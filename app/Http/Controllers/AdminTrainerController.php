@@ -15,7 +15,7 @@ class AdminTrainerController extends Controller
     {
         $trainers = Trainer::with([
                 'user',
-                'members' // ⬅️ WAJIB untuk popup daftar member
+                'members' 
             ])
             ->orderBy('created_at', 'desc')
             ->get();
@@ -88,20 +88,28 @@ class AdminTrainerController extends Controller
             'pengalaman_tahun' => 'required|integer|min:0',
             'telp'             => 'required|string|max:20',
             'foto'             => 'nullable|image|max:2048',
+            'password'         => 'nullable|string|min:6', // Tambahkan ini
         ]);
-        // handle foto baru
+
         if ($request->hasFile('foto')) {
             if ($trainer->foto) {
-                Storage::disk('public')->delete($trainer->foto);
+                \Storage::disk('public')->delete($trainer->foto);
             }
 
             $data['foto'] = $request->file('foto')
                 ->store('trainers', 'public');
         }
+        $trainer->update(collect($data)->except('password')->toArray());
+    
+        if ($request->filled('password')) {
+            if ($trainer->user) {
+                $trainer->user->update([
+                    'password' => \Illuminate\Support\Facades\Hash::make($request->password)
+                ]);
+            }
+        }
 
-        $trainer->update($data);
-
-        return back()->with('success', 'Data trainer berhasil diperbarui.');
+        return back()->with('success', 'Data trainer dan password berhasil diperbarui.');
     }
     public function destroy($id)
     {
@@ -118,7 +126,7 @@ class AdminTrainerController extends Controller
             // 2. Hapus data trainer
             $trainer->delete();
 
-            // 3. Hapus data user (agar email bisa didaftarkan lagi nantinya)
+            // 3. Hapus data user 
             if ($user) {
                 $user->delete();
             }

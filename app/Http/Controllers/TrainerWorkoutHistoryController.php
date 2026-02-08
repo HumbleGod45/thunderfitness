@@ -11,7 +11,6 @@ class TrainerWorkoutHistoryController extends Controller
 {
     /**
      * Halaman awal history
-     * Menampilkan dropdown member milik trainer
      */
     public function index()
     {

@@ -17,7 +17,6 @@ class TrainerWorkoutController extends Controller
     {
         $trainer = Auth::user()->trainer;
 
-        // security: pastikan member ini milik trainer tsb
         if (! $trainer || ! $trainer->members()->whereKey($member->id_member)->exists()) {
             abort(403);
         }

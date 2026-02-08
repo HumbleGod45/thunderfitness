@@ -73,7 +73,7 @@
             {{-- SET LIST --}}
             <div class="set-wrapper space-y-3">
 
-                <div class="set-item grid grid-cols-2 gap-3 p-3 relative">
+                <div class="set-item grid grid-cols-2 gap-3 relative">
                     <input type="number" min="1" step="1"
                         onkeydown="if(event.key === '-' || event.key === 'e') event.preventDefault()"
                         oninput="if(this.value !== '' && this.value < 1) this.value = 1"

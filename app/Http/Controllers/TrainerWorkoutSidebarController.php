@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 class TrainerWorkoutSidebarController extends Controller
 {
     /**
-     * Form input latihan dari sidebar (dropdown member)
+     * Form input latihan dari sidebar 
      */
     public function create()
     {

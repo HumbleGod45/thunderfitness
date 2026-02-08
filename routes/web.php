@@ -38,11 +38,11 @@ Route::get('/about', fn () => view('about', [
     'title' => 'Tentang Kami | Thunder Fitness'
 ]));
 
+
 /*
 |--------------------------------------------------------------------------
-| AUTH (LOGIN & REGISTER)
+| HALAMAN AUTENTIKASI
 |--------------------------------------------------------------------------
-| ❗ TANPA guest middleware dulu (biar session aman)
 */
 Route::get('/login', [AuthController::class, 'showLoginForm'])
     ->name('login');
@@ -137,7 +137,7 @@ Route::middleware(['auth', 'role:trainer'])
             ->name('trainer.workouts.store');
         
         Route::get('/latihan', [TrainerWorkoutSidebarController::class, 'create'])
-            ->name('trainer.sidebar.workouts.create');
+            ->name('trainer.workouts.sidebar.create');
 
         Route::post('/latihan', [TrainerWorkoutSidebarController::class, 'store'])
             ->name('trainer.sidebar.workouts.store');

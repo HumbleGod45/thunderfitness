@@ -14,8 +14,10 @@ class AdminMemberController extends Controller
     public function index()
     {
         $members = Member::with('trainer')
-            ->orderBy('id_member')
-            ->get();
+            ->orderByRaw('aktif_hingga IS NOT NULL') 
+            ->orderBy('aktif_hingga', 'asc')
+            ->orderBy('id_member', 'desc')
+            ->paginate(15); 
 
         $trainers = Trainer::orderBy('nama')->get();
 
@@ -31,40 +33,45 @@ class AdminMemberController extends Controller
      */
     public function update(Request $request, Member $member)
     {
+        // 1. Validasi data
         $data = $request->validate([
             'nama'           => ['required', 'string', 'max:255'],
             'telp'           => ['nullable', 'string', 'max:20'],
             'tanggal_daftar' => ['nullable', 'date'],
             'aktif_hingga'   => ['nullable', 'date'],
             'trainer_id'     => ['nullable', 'exists:trainers,id_trainer'],
+            'password'       => ['nullable', 'string', 'min:6'], 
         ]);
 
-        // kalau dropdown pilih "-" (string kosong)
         if (array_key_exists('trainer_id', $data) && $data['trainer_id'] === '') {
             $data['trainer_id'] = null;
         }
+        $member->update(collect($data)->except('password')->toArray());
 
-        $member->update($data);
+        if ($request->filled('password')) {
+            if ($member->user) {
+                $member->user->update([
+                    'password' => \Illuminate\Support\Facades\Hash::make($request->password)
+                ]);
+            }
+        }
 
-        return back()->with('success', 'Data member berhasil diperbarui.');
+        return back()->with('success', 'Data member dan password berhasil diperbarui.');
     }
-
     /**
      * Hapus data member
      */
     public function destroy(Member $member)
-{
-    // Cegah hapus jika member masih aktif
-    if ($member->aktif_hingga && now()->lessThanOrEqualTo($member->aktif_hingga)) {
-        return back()->with('error', 'Member masih aktif dan tidak dapat dihapus.');
-    }
+    {
+        if ($member->aktif_hingga && now()->lessThanOrEqualTo($member->aktif_hingga)) {
+            return back()->with('error', 'Member masih aktif dan tidak dapat dihapus.');
+        }
 
-    try {
-        $member->delete();
-        return back()->with('success', 'Data member berhasil dihapus.');
-    } catch (\Throwable $e) {
-        return back()->with('error', 'Gagal menghapus data member.');
+        try {
+            $member->delete();
+            return back()->with('success', 'Data member berhasil dihapus.');
+        } catch (\Throwable $e) {
+            return back()->with('error', 'Gagal menghapus data member.');
+        }
     }
-}
-
 }

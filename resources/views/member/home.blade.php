@@ -172,7 +172,7 @@
     </div>
 </div>
 
-{{-- EDIT PROFIL SINGKAT (Hanya Tinggi & Berat) --}}
+{{-- EDIT PROFIL SINGKAT --}}
 <div id="editProfileModal"
      class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 hidden">
     <div class="bg-[#0A0F24] rounded-2xl border border-white/10 w-full max-w-lg p-6 md:p-7 relative">
@@ -206,19 +206,18 @@
                 <div>
                     <label class="block text-sm mb-1">Tinggi Badan (cm)</label>
                     <input type="number" name="tinggi_badan"
-                           value="{{ old('tinggi_badan', $tinggi) }}"
-                           min="1" step="1" inputmode="numeric"
-                           oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                           onkeydown="if(event.key === 'e' || event.key === '-' || event.key === '+' ) event.preventDefault()"
-                           class="w-full px-3 py-2 rounded-lg bg-[#020617] border border-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
+                        value="{{ old('tinggi_badan', $tinggi) }}"
+                        min="1" step="1" inputmode="numeric"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, ''); if(this.value === '0') this.value = '';"
+                        onkeydown="if(event.key === 'e' || event.key === '-' || event.key === '+' ) event.preventDefault()"
+                        class="w-full px-3 py-2 rounded-lg bg-[#020617] border border-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
                 </div>
-
                 <div>
                     <label class="block text-sm mb-1">Berat Badan (kg)</label>
                     <input type="number" name="berat_badan"
                            value="{{ old('berat_badan', $berat) }}"
                            min="1" step="1" inputmode="numeric"
-                           oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                           oninput="this.value = this.value.replace(/[^0-9]/g, ''); if(this.value === '0') this.value = '';"
                            onkeydown="if(event.key === 'e' || event.key === '-' || event.key === '+' ) event.preventDefault()"
                            class="w-full px-3 py-2 rounded-lg bg-[#020617] border border-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
                 </div>

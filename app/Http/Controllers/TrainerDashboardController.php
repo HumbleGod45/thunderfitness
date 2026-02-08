@@ -35,13 +35,11 @@ class TrainerDashboardController extends Controller
     }
 
     /**
-     * DETAIL MEMBER (dipanggil via AJAX)
+     * DETAIL MEMBER
      */
     public function detail(Member $member)
     {
         $trainer = Auth::user()->trainer;
-
-        // SECURITY: pastikan member ini memang milik trainer tsb
         if (! $trainer || ! $trainer->members()->whereKey($member->id_member)->exists()) {
             abort(403, 'Tidak punya akses ke member ini');
         }

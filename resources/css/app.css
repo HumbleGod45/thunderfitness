@@ -56,3 +56,18 @@ select:-webkit-autofill {
 .ck-editor__editable:focus {
     box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.5); 
 }
+<style>
+.custom-pagination nav svg {
+    display: inline-block;
+    width: 20px;
+}
+.custom-pagination nav div:first-child {
+    display: none; 
+}
+@media (min-width: 640px) {
+    .custom-pagination nav div:first-child {
+        display: block;
+        color: #6b7280;
+    }
+}
+</style>
