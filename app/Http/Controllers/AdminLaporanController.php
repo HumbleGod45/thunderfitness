@@ -20,24 +20,35 @@ class AdminLaporanController extends Controller
     $allMembers = DB::table('members')->select('id_member', 'nama')->orderBy('nama')->get();
 
     // ==========================================
-    // STATISTIK UNTUK SUMMARY CARDS
+    // STATISTIK UNTUK SUMMARY CARDS 
     // ==========================================
+    $today = now()->toDateString();
+
     $totalMember  = DB::table('members')->count();
     $totalTrainer = DB::table('trainers')->count();
     $totalLatihan = DB::table('workout_logs')->count();
 
-    // Member Aktif: Member yang ID-nya ada di workout_logs
-    $memberAktif = DB::table('workout_logs')->distinct('id_member')->count('id_member');
+    $memberAktif = DB::table('members')
+        ->whereNotNull('aktif_hingga')
+        ->whereDate('aktif_hingga', '>=', $today)
+        ->count();
     
-    // Member Belum Aktif: Total - Aktif
-    $memberBelumAktif = $totalMember - $memberAktif;
+    // Member Belum Aktif: aktif_hingga NULL
+    $memberBelumAktif = DB::table('members')
+        ->whereNull('aktif_hingga')
+        ->count();
+
+    // Member Expired
+    $memberExpired = DB::table('members')
+        ->whereNotNull('aktif_hingga')
+        ->whereDate('aktif_hingga', '<', $today)
+        ->count();
 
     // ==========================================
-    // QUERY LAPORAN (Hanya dieksekusi jika ada filter)
+    // QUERY LAPORAN 
     // ==========================================
     $laporan = collect(); // Default kosong
     
-    // Cek apakah user sedang melakukan filter
     $isFiltering = $startDate || $endDate || $memberId;
 
     if ($isFiltering) {
@@ -74,7 +85,7 @@ class AdminLaporanController extends Controller
         'allMembers'       => $allMembers,
         'startDate'        => $startDate,
         'endDate'          => $endDate,
-        'isFiltering'      => $isFiltering // Kirim status filter ke Blade
+        'isFiltering'      => $isFiltering 
     ]);
 }
 }
