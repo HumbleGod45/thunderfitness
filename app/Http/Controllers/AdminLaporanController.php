@@ -29,19 +29,16 @@ class AdminLaporanController extends Controller
     $totalLatihan = DB::table('workout_logs')->count();
 
     $memberAktif = DB::table('members')
-        ->whereNotNull('aktif_hingga')
-        ->whereDate('aktif_hingga', '>=', $today)
-        ->count();
-    
-    // Member Belum Aktif: aktif_hingga NULL
-    $memberBelumAktif = DB::table('members')
-        ->whereNull('aktif_hingga')
-        ->count();
+    ->whereNotNull('aktif_hingga')
+    ->whereDate('aktif_hingga', '>=', $today)
+    ->count();
 
-    // Member Expired
-    $memberExpired = DB::table('members')
-        ->whereNotNull('aktif_hingga')
-        ->whereDate('aktif_hingga', '<', $today)
+    // Member Belum Aktif / Tidak Aktif: 
+    $memberBelumAktif = DB::table('members')
+        ->where(function($query) use ($today) {
+            $query->whereNull('aktif_hingga') 
+                ->orWhereDate('aktif_hingga', '<', $today); 
+        })
         ->count();
 
     // ==========================================

@@ -216,21 +216,53 @@
             <form id="resetPasswordForm" action="{{ route('member.password.update') }}" method="POST" class="space-y-4">
                 @csrf
                 @method('PUT')
+    
+                {{-- Password Saat Ini --}}
                 <div>
                     <label class="block text-xs font-medium text-gray-400 mb-1">Password Saat Ini</label>
-                    <input type="password" name="current_password" required class="w-full px-4 py-2 rounded-xl bg-[#020617] border border-gray-700 text-white text-sm outline-none focus:border-emerald-500">
+                    <div class="relative">
+                        <input type="password" id="current_password" name="current_password" required 
+                            class="w-full px-4 py-2 pr-10 rounded-xl bg-[#020617] border border-gray-700 text-white text-sm outline-none focus:border-emerald-500">
+                        <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-emerald-500 toggle-password" data-target="current_password">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 eye-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
+
+                {{-- Password Baru --}}
                 <div>
                     <label class="block text-xs font-medium text-gray-400 mb-1">Password Baru</label>
-                    <input type="password" name="password" required class="w-full px-4 py-2 rounded-xl bg-[#020617] border border-gray-700 text-white text-sm outline-none focus:border-emerald-500">
+                    <div class="relative">
+                        <input type="password" id="password" name="password" required 
+                            class="w-full px-4 py-2 pr-10 rounded-xl bg-[#020617] border border-gray-700 text-white text-sm outline-none focus:border-emerald-500">
+                        <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-emerald-500 toggle-password" data-target="password">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 eye-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
+
+                {{-- Konfirmasi Password --}}
                 <div>
                     <label class="block text-xs font-medium text-gray-400 mb-1">Konfirmasi Password Baru</label>
-                    <input type="password" name="password_confirmation" required class="w-full px-4 py-2 rounded-xl bg-[#020617] border border-gray-700 text-white text-sm outline-none focus:border-emerald-500">
+                    <div class="relative">
+                        <input type="password" id="password_confirmation" name="password_confirmation" required 
+                            class="w-full px-4 py-2 pr-10 rounded-xl bg-[#020617] border border-gray-700 text-white text-sm outline-none focus:border-emerald-500">
+                        <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-emerald-500 toggle-password" data-target="password_confirmation">
+                            <svg xmlns="http://www.w3.org/2000/xl" class="h-5 w-5 eye-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
-
         <div class="p-5 border-t border-white/5 flex justify-end gap-3">
             <button type="button" id="cancelReset" class="px-5 py-2 rounded-xl border border-white/10 text-sm text-gray-300 hover:bg-white/5">Batal</button>
             <button type="button" id="confirmResetBtn" class="px-6 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-sm font-bold text-white transition-all">Update Password</button>
@@ -241,6 +273,29 @@
 {{-- Scripts --}}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+document.querySelectorAll('.toggle-password').forEach(button => {
+    button.addEventListener('click', function() {
+        const targetId = this.getAttribute('data-target');
+        const input = document.getElementById(targetId);
+        const icon = this.querySelector('.eye-icon');
+
+        if (input.type === 'password') {
+            input.type = 'text';
+            // Icon Mata Tertutup
+            icon.innerHTML = `
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
+            `;
+        } else {
+            input.type = 'password';
+            // Icon Mata Terbuka
+            icon.innerHTML = `
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            `;
+        }
+    });
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     // Modal Selectors
     const modals = {

@@ -45,7 +45,7 @@
             $stats = [
                 ['label' => 'Total Member', 'val' => $totalMember, 'color' => 'slate'],
                 ['label' => 'Member Aktif', 'val' => $memberAktif, 'color' => 'emerald'],
-                ['label' => 'Belum Aktif', 'val' => $memberBelumAktif, 'color' => 'rose'],
+                ['label' => 'Non-Aktif', 'val' => $memberBelumAktif, 'color' => 'rose'],
                 ['label' => 'Total Trainer', 'val' => $totalTrainer, 'color' => 'sky'],
                 ['label' => 'Total Latihan', 'val' => $totalLatihan, 'color' => 'violet'],
             ];
