@@ -73,6 +73,7 @@
 
                 @forelse($groupedLaporan as $tanggal => $rowsByDate)
                     <div class="bg-[#0A0F24] rounded-3xl border border-white/5 overflow-hidden group">
+                        {{-- Tombol Accordion Tanggal --}}
                         <button onclick="toggleAccordion('content-{{ $loop->index }}', 'icon-{{ $loop->index }}')" 
                             class="w-full px-8 py-5 flex items-center justify-between hover:bg-white/[0.02] transition-all">
                             <div class="flex items-center gap-6">
@@ -89,33 +90,41 @@
                             </div>
                         </button>
 
+                        {{-- Konten Dropdown --}}
                         <div id="content-{{ $loop->index }}" class="hidden border-t border-white/5 bg-[#020617]/30">
-                            <div class="p-6 space-y-6">
+                            <div class="p-6 space-y-8">
                                 @foreach($rowsByDate->groupBy('nama_member') as $namaMember => $activities)
-                                    <div class="bg-[#0A0F24]/50 rounded-2xl border border-white/5 overflow-hidden">
-                                        <div class="px-6 py-3 bg-white/[0.03] flex justify-between items-center border-b border-white/5">
-                                            <span class="text-xs font-bold text-slate-300 tracking-wide flex items-center gap-2">
-                                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                                                {{ $namaMember }}
-                                            </span>
-                                            <span class="text-[10px] text-slate-500 uppercase font-bold">Coach: {{ $activities->first()->nama_trainer ?? 'Mandiri' }}</span>
+                                    <div class="space-y-4">
+                                        {{-- Nama Member Header --}}
+                                        <div class="flex items-center gap-3 ml-1">
+                                            <span class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]"></span>
+                                            <h4 class="text-sm font-black text-white uppercase tracking-tighter">{{ $namaMember }}</h4>
+                                            <span class="text-[10px] text-slate-500 font-bold ml-auto uppercase tracking-widest">Coach: {{ $activities->first()->nama_trainer ?? 'Mandiri' }}</span>
                                         </div>
-                                        <table class="w-full text-sm text-left">
-                                            <tbody>
-                                                @foreach($activities as $act)
-                                                    <tr class="border-b border-white/[0.02] last:border-0 hover:bg-white/[0.01] transition-colors">
-                                                        <td class="px-6 py-4 text-slate-300 font-medium">{{ $act->nama_latihan }}</td>
-                                                        <td class="px-6 py-4 text-center">
-                                                            <span class="text-emerald-500/80 font-mono font-bold">{{ $act->beban }}<span class="text-[10px] ml-0.5">KG</span></span>
-                                                        </td>
-                                                        <td class="px-6 py-4 text-center text-slate-400 font-mono">{{ $act->reps }}<span class="text-[10px] ml-0.5">REPS</span></td>
-                                                        <td class="px-6 py-4 text-right text-[11px] text-slate-600 font-bold tabular-nums">
-                                                            {{ \Carbon\Carbon::parse($act->created_at)->format('H:i') }}
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+
+                                        {{-- Grid Latihan per Jenis --}}
+                                        <div class="grid grid-cols-1 gap-3">
+                                            @foreach($activities->groupBy('nama_latihan') as $namaLatihan => $sets)
+                                                <div class="bg-[#0A0F24]/80 rounded-2xl border border-white/5 p-5 transition-all hover:border-white/10">
+                                                    <div class="flex justify-between items-center mb-3">
+                                                        <h5 class="text-sm font-bold text-emerald-400 tracking-tight">{{ $namaLatihan }}</h5>
+                                                    </div>
+                                                    
+                                                    <div class="space-y-2">
+                                                        @foreach($sets as $idx => $set)
+                                                            <div class="flex justify-between items-center text-xs">
+                                                                <span class="text-slate-500 font-medium">Set {{ $idx + 1 }}</span>
+                                                                <div class="flex items-center gap-2">
+                                                                    <span class="text-slate-200 font-bold">{{ $set->beban }} <span class="text-[10px] text-slate-500 font-normal">kg</span></span>
+                                                                    <span class="text-slate-600">•</span>
+                                                                    <span class="text-slate-200 font-bold">{{ $set->reps }} <span class="text-[10px] text-slate-500 font-normal">reps</span></span>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
                                     </div>
                                 @endforeach
                             </div>
@@ -127,7 +136,7 @@
             </div>
         </div>
     @else
-        {{-- EMPTY STATE --}}
+        {{-- EMPTY STATE (Belum Filter) --}}
         <div class="py-24 flex flex-col items-center justify-center">
             <div class="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center mb-6">
                 <svg class="w-10 h-10 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
