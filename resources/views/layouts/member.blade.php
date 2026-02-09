@@ -132,7 +132,7 @@
         </section>
     </div>
 
-    {{-- FOOTER (IKUT SIDEBAR) --}}
+    {{-- FOOTER --}}
     <footer id="memberFooter"
             class="bg-[#050816] text-gray-400 border-t border-white/10
                    transition-all duration-300">

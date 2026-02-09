@@ -59,7 +59,8 @@
             <div class="relative mb-4">
                 <input type="text"
                        class="exercise-search w-full px-4 py-2 rounded-lg
-                              bg-[#020617] border border-white/10 text-white"
+                              bg-[#020617] border border-white/10 text-white
+                              placeholder-gray-500"
                        placeholder="Pilih latihan…"
                        autocomplete="off">
 
@@ -79,7 +80,8 @@
             </div>
 
             {{-- SET LIST --}}
-            <div class="set-wrapper space-y-3">
+           <div class="set-wrapper space-y-3">
+
                 <div class="set-item grid grid-cols-2 gap-3 relative">
                     <input type="number" min="1" step="1"
                         onkeydown="if(event.key === '-' || event.key === 'e') event.preventDefault()"
@@ -94,6 +96,14 @@
                         name="exercises[0][sets][0][reps]"
                         placeholder="Reps"
                         class="px-3 py-2 rounded-lg bg-[#020617] border border-white/10 text-white">
+
+                    <button type="button"
+                            class="remove-set absolute -right-3 -top-3
+                                   w-7 h-7 rounded-full bg-red-500/80
+                                   text-white text-sm flex items-center
+                                   justify-center hover:bg-red-500">
+                        ✕
+                    </button>
                 </div>
             </div>
 
@@ -120,15 +130,33 @@
 
 {{-- SCRIPT --}}
 <script>
+document.addEventListener('click', e => {
+        if (!e.target.classList.contains('exercise-search') && !e.target.classList.contains('exercise-option')) {
+            document.querySelectorAll('.exercise-dropdown').forEach(d => d.classList.add('hidden'));
+        }
+    });
+document.addEventListener('input', e => {
+    if (!e.target.classList.contains('exercise-search')) return;
+
+    const keyword  = e.target.value.toLowerCase();
+    const dropdown = e.target.parentElement.querySelector('.exercise-dropdown');
+    const options  = dropdown.querySelectorAll('.exercise-option');
+
+    dropdown.classList.remove('hidden');
+
+    options.forEach(opt => {
+        const text = opt.innerText.toLowerCase();
+        opt.style.display = text.includes(keyword) ? 'block' : 'none';
+    });
+});
+
 document.addEventListener('DOMContentLoaded', () => {
 
     let exerciseIndex = 0;
     const wrapper = document.getElementById('exerciseWrapper');
+    const addExerciseBtn = document.getElementById('addExerciseBtn');
 
-    // =============================
-    // TAMBAH EXERCISE
-    // =============================
-    document.getElementById('addExerciseBtn').onclick = () => {
+    addExerciseBtn.onclick = () => {
         exerciseIndex++;
 
         wrapper.insertAdjacentHTML('beforeend', `
@@ -136,29 +164,30 @@ document.addEventListener('DOMContentLoaded', () => {
             border border-white/10 p-5 pt-10 overflow-visible">
 
             <button type="button"
-                class="remove-exercise absolute top-3 right-3
+                class="remove-exercise absolute top-3 right-3 z-10
                     px-3 py-1 rounded-full
                     border border-red-400/40 text-red-400
-                    text-xs font-semibold hover:bg-red-500/10">
+                    text-xs font-semibold
+                    hover:bg-red-500/10 hover:text-red-300">
                 Hapus
             </button>
 
             <div class="relative mb-4">
                 <input type="text"
-                    class="exercise-search w-full px-4 py-2 rounded-lg
-                           bg-[#020617] border border-white/10 text-white"
-                    placeholder="Pilih latihan…">
+                       class="exercise-search w-full px-4 py-2 rounded-lg
+                              bg-[#020617] border border-white/10 text-white"
+                       placeholder="Pilih latihan…"
+                       autocomplete="off">
 
-                <input type="hidden"
-                    name="exercises[${exerciseIndex}][workout_id]">
+                <input type="hidden" name="exercises[${exerciseIndex}][workout_id]">
 
                 <div class="exercise-dropdown absolute z-20 mt-1 w-full
                             rounded-xl bg-[#020617] border border-white/10
                             max-h-48 overflow-y-auto hidden">
                     @foreach($workouts as $workout)
                         <div class="exercise-option px-4 py-2
-                            hover:bg-white/10 cursor-pointer text-sm"
-                            data-id="{{ $workout->id_workout }}">
+                                    hover:bg-white/10 cursor-pointer text-sm"
+                             data-id="{{ $workout->id_workout }}">
                             {{ $workout->nama_latihan }}
                         </div>
                     @endforeach
@@ -180,25 +209,31 @@ document.addEventListener('DOMContentLoaded', () => {
                         name="exercises[0][sets][0][reps]"
                         placeholder="Reps"
                         class="px-3 py-2 rounded-lg bg-[#020617] border border-white/10 text-white">
+
+                    <button type="button"
+                            class="remove-set absolute -right-3 -top-3
+                                   w-7 h-7 rounded-full bg-red-500/80
+                                   text-white text-sm flex items-center
+                                   justify-center hover:bg-red-500">
+                        ✕
+                    </button>
                 </div>
             </div>
 
             <button type="button"
-                class="addSetBtn mt-4 text-sm text-emerald-400 hover:underline">
+                    class="addSetBtn mt-4 text-sm text-emerald-400 hover:underline">
                 + Tambah Set
             </button>
         </div>
         `);
     };
 
-    // =============================
-    // EVENT DELEGATION
-    // =============================
     document.addEventListener('click', e => {
         if (!e.target.classList.contains('exercise-search') && !e.target.closest('.exercise-dropdown')) {
             document.querySelectorAll('.exercise-dropdown').forEach(d => d.classList.add('hidden'));
         }
     });
+
     document.addEventListener('click', e => {
 
         if (e.target.classList.contains('exercise-search')) {
@@ -207,8 +242,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (e.target.classList.contains('exercise-option')) {
             const dropdown = e.target.closest('.exercise-dropdown');
-            const search = dropdown.previousElementSibling.previousElementSibling;
-            const hidden = dropdown.previousElementSibling;
+            const search   = dropdown.previousElementSibling.previousElementSibling;
+            const hidden   = dropdown.previousElementSibling;
 
             search.value = e.target.innerText;
             hidden.value = e.target.dataset.id;
@@ -220,45 +255,87 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (e.target.classList.contains('addSetBtn')) {
-            const wrapper = e.target.previousElementSibling;
-            const index = wrapper.children.length;
-            const hidden = e.target.closest('.exercise-item')
-                          .querySelector('input[type="hidden"]');
-            const ex = hidden.name.match(/\[(\d+)\]/)[1];
+            const setWrapper = e.target.previousElementSibling;
+            const setIndex   = setWrapper.children.length;
+            const hidden     = e.target.closest('.exercise-item')
+                               .querySelector('input[type="hidden"]');
+            const exIndex    = hidden.name.match(/\[(\d+)\]/)[1];
 
-            wrapper.insertAdjacentHTML('beforeend', `
+            setWrapper.insertAdjacentHTML('beforeend', `
                 <div class="set-item grid grid-cols-2 gap-3 relative">
                     <input type="number"
-                        name="exercises[${ex}][sets][${index}][beban]"
-                        placeholder="Beban (kg)"
-                        class="px-3 py-2 rounded-lg bg-[#020617]
-                               border border-white/10 text-white">
+                           name="exercises[${exIndex}][sets][${setIndex}][beban]"
+                           placeholder="Beban (kg)"
+                           class="px-3 py-2 rounded-lg bg-[#020617]
+                                  border border-white/10 text-white">
 
                     <input type="number"
-                        name="exercises[${ex}][sets][${index}][reps]"
-                        placeholder="Reps"
-                        class="px-3 py-2 rounded-lg bg-[#020617]
-                               border border-white/10 text-white">
+                           name="exercises[${exIndex}][sets][${setIndex}][reps]"
+                           placeholder="Reps"
+                           class="px-3 py-2 rounded-lg bg-[#020617]
+                                  border border-white/10 text-white">
+
+                    <button type="button"
+                            class="remove-set absolute -right-3 -top-3
+                                   w-7 h-7 rounded-full bg-red-500/80
+                                   text-white text-sm flex items-center
+                                   justify-center hover:bg-red-500">
+                        ✕
+                    </button>
                 </div>
             `);
         }
+
+        if (e.target.classList.contains('remove-set')) {
+            e.target.closest('.set-item').remove();
+        }
     });
 
-    // =============================
-    // VALIDASI SUBMIT
-    // =============================
+    // konfirmasi submit
     document.getElementById('workoutForm').addEventListener('submit', e => {
         e.preventDefault();
 
-        if (!document.querySelector('select[name="member_id"]').value) {
-            Swal.fire('Member belum dipilih', '', 'error');
+        // validasi tanggal
+        const tanggalInput = document.querySelector('input[name="tanggal"]');
+        const today = new Date().toISOString().split('T')[0];
+
+        if (tanggalInput.value < today) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Tanggal tidak valid',
+                text: 'Tanggal latihan tidak boleh sebelum hari ini.',
+                background: '#0A0F24',
+                color: '#fff',
+                confirmButtonColor: '#EF4444'
+            });
             return;
         }
 
+        // validasi beban & reps
+        let invalid = false;
+        document.querySelectorAll('input[type="number"]').forEach(input => {
+            if (input.value < 1) invalid = true;
+        });
+
+        if (invalid) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Input tidak valid',
+                text: 'Beban dan reps minimal bernilai 1.',
+                background: '#0A0F24',
+                color: '#fff',
+                confirmButtonColor: '#EF4444'
+            });
+            return;
+        }
+
+        // konfirmasi simpan
         Swal.fire({
             title: 'Simpan latihan?',
+            text: 'Latihan akan disimpan untuk member ini.',
             showCancelButton: true,
             confirmButtonText: 'Simpan',
+            cancelButtonText: 'Batal',
             background: '#0A0F24',
             color: '#fff',
             confirmButtonColor: '#10B981'
@@ -266,7 +343,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (res.isConfirmed) e.target.submit();
         });
     });
-
 });
 </script>
 @endsection

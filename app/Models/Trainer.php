@@ -14,7 +14,7 @@ class Trainer extends Model
     public $incrementing = true;
 
     protected $fillable = [
-        'users_id_user',
+        'Users_id_user',
         'nama',
         'spesialis',
         'pengalaman_tahun',
@@ -24,7 +24,7 @@ class Trainer extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'users_id_user', 'id_user');
+        return $this->belongsTo(User::class, 'Users_id_user', 'id_user');
     }
 
     public function members()

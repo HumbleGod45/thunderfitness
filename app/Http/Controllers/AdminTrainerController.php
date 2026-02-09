@@ -59,7 +59,7 @@ class AdminTrainerController extends Controller
 
             // 3. Buat data trainer
             Trainer::create([
-                'users_id_user'    => $user->id_user,
+                'Users_id_user'    => $user->id_user,
                 'nama'             => $validated['nama'],
                 'spesialis'        => $validated['spesialis'],
                 'pengalaman_tahun' => $validated['pengalaman_tahun'],
@@ -88,20 +88,22 @@ class AdminTrainerController extends Controller
             'pengalaman_tahun' => 'required|integer|min:0',
             'telp'             => 'required|string|max:20',
             'foto'             => 'nullable|image|max:2048',
-            'password'         => 'nullable|string|min:6', // Tambahkan ini
+            'password'         => 'nullable|string|min:6', 
         ]);
 
         if ($request->hasFile('foto')) {
             if ($trainer->foto) {
                 \Storage::disk('public')->delete($trainer->foto);
             }
-
-            $data['foto'] = $request->file('foto')
-                ->store('trainers', 'public');
+            $data['foto'] = $request->file('foto')->store('trainers', 'public');
         }
+
+        // Update data profil trainer
         $trainer->update(collect($data)->except('password')->toArray());
     
+        // Update password akun login
         if ($request->filled('password')) {
+            // Relasi ini sekarang aktif karena foreign key sudah sesuai
             if ($trainer->user) {
                 $trainer->user->update([
                     'password' => \Illuminate\Support\Facades\Hash::make($request->password)
@@ -111,10 +113,11 @@ class AdminTrainerController extends Controller
 
         return back()->with('success', 'Data trainer dan password berhasil diperbarui.');
     }
+    
     public function destroy($id)
     {
         $trainer = Trainer::findOrFail($id);
-        $user = User::find($trainer->users_id_user); // Ambil user terkait
+        $user = User::find($trainer->Users_id_user); // Ambil user terkait
 
         DB::beginTransaction();
         try {

@@ -96,7 +96,6 @@
                         ✕
                     </button>
                 </div>
-
             </div>
 
             <button type="button"
@@ -121,6 +120,26 @@
 
 {{-- SCRIPT --}}
 <script>
+document.addEventListener('click', e => {
+        if (!e.target.classList.contains('exercise-search') && !e.target.classList.contains('exercise-option')) {
+            document.querySelectorAll('.exercise-dropdown').forEach(d => d.classList.add('hidden'));
+        }
+    });
+document.addEventListener('input', e => {
+    if (!e.target.classList.contains('exercise-search')) return;
+
+    const keyword  = e.target.value.toLowerCase();
+    const dropdown = e.target.parentElement.querySelector('.exercise-dropdown');
+    const options  = dropdown.querySelectorAll('.exercise-option');
+
+    dropdown.classList.remove('hidden');
+
+    options.forEach(opt => {
+        const text = opt.innerText.toLowerCase();
+        opt.style.display = text.includes(keyword) ? 'block' : 'none';
+    });
+});
+
 document.addEventListener('DOMContentLoaded', () => {
 
     let exerciseIndex = 0;
