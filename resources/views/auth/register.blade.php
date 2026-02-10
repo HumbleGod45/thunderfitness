@@ -71,7 +71,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider mb-2 text-gray-400">No Telepon</label>
-                    <input type="text" name="telp" value="{{ old('telp') }}" placeholder="08xx..."
+                    <input type="text" name="telp" id="telp"value="{{ old('telp') }}" placeholder="08xx..."inputmode="numeric"oninput="this.value = this.value.replace(/[^0-9]/g, '');"
                         class="w-full px-4 py-3 rounded-xl bg-[#020617] border border-gray-700 focus:border-emerald-500 transition-all text-sm outline-none">
                 </div>
                 <div>
