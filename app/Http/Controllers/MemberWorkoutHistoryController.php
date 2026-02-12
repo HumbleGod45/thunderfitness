@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class MemberWorkoutHistoryController extends Controller
 {
+    private function checkMemberStatus($member)
+    {
+        if (!$member) return false;
+        $aktifHingga = $member->aktif_hingga ? Carbon::parse($member->aktif_hingga) : null;
+        return $aktifHingga && ($aktifHingga->isFuture() || $aktifHingga->isToday());
+    }
     public function index()
 {
     $member = Auth::user()->member;
@@ -14,7 +21,9 @@ class MemberWorkoutHistoryController extends Controller
     if (!$member) {
         abort(403);
     }
-
+    if (!$this->checkMemberStatus($member)) {
+            return redirect()->route('member.home')->with('error', 'Akses dibatasi. Silakan perpanjang keanggotaan Anda untuk mengakses fitur Latihan.');
+        }
     $logs = DB::table('workout_logs')
         ->join('workouts', 'workouts.id_workout', '=', 'workout_logs.id_workout')
         ->where('workout_logs.id_member', $member->id_member)

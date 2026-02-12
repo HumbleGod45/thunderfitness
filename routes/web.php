@@ -56,9 +56,13 @@ Route::get('/register', [AuthController::class, 'showRegisterForm'])
 Route::post('/register', [AuthController::class, 'register'])
     ->name('register.post');
 
+Route::put('/update-password-simple', [AuthController::class, 'updatePasswordSimple'])->name('password.update.simple');
+
 Route::post('/logout', [AuthController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
+
+
 
 /*
 |--------------------------------------------------------------------------

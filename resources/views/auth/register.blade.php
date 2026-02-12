@@ -71,7 +71,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider mb-2 text-gray-400">No Telepon</label>
-                    <input type="text" name="telp" id="telp"value="{{ old('telp') }}" placeholder="08xx..."inputmode="numeric"oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                    <input type="text" name="telp" id="telp"value="{{ old('telp') }}" required placeholder="08xx..."inputmode="numeric"oninput="this.value = this.value.replace(/[^0-9]/g, '');"
                         class="w-full px-4 py-3 rounded-xl bg-[#020617] border border-gray-700 focus:border-emerald-500 transition-all text-sm outline-none">
                 </div>
                 <div>
@@ -82,10 +82,13 @@
                         <option value="P" {{ old('jenis_kelamin') == 'P' ? 'selected' : '' }}>Perempuan</option>
                     </select>
                 </div>
+                @php
+                    $minAge = now()->subYears(15)->toDateString();
+                @endphp
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider mb-2 text-gray-400">Tanggal Lahir</label>
-                    <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir') }}"
-                        class="w-full px-4 py-3 rounded-xl bg-[#020617] border border-gray-700 focus:border-emerald-500 transition-all text-sm outline-none">
+                    <input type="date" name="tanggal_lahir" required max="{{ $minAge }}" value="{{ $minAge }}" class="w-full px-4 py-3 rounded-xl bg-[#020617] border border-gray-700 focus:border-emerald-500 transition-all text-sm outline-none">
+                        <p class="text-[10px] text-gray-500 mt-1 italic">*Minimal usia pendaftaran adalah 15 tahun.</p>
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>

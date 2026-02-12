@@ -91,6 +91,23 @@ class MemberDashboardController extends Controller
             ->whereIn('target', ['all', 'member'])
             ->latest()
             ->first();
+         
+        $showRenewalNotice = false;
+
+        if ($aktifHingga) {
+            if ($aktifHingga->isFuture() || $aktifHingga->isToday()) {
+                $statusText   = 'Aktif';
+                $badgeClasses = 'bg-emerald-500/10 text-emerald-300 border border-emerald-500/10';
+            } else {
+                $statusText   = 'Tidak Aktif';
+                $badgeClasses = 'bg-gray-700/40 text-gray-200 border border-white/10';
+                $showRenewalNotice = true; 
+            }
+        } else {
+            $statusText   = 'Belum Aktif';
+            $badgeClasses = 'bg-yellow-600/10 text-yellow-300 border border-yellow-600/10';
+            $showRenewalNotice = true; 
+        }
 
         return view('member.home', compact(
             'member',
@@ -110,7 +127,8 @@ class MemberDashboardController extends Controller
             'foto',
             'lastWorkoutDate',
             'lastWorkout',
-            'announcement'
+            'announcement',
+            'showRenewalNotice'
         ));
     }
 }

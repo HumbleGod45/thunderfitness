@@ -227,7 +227,7 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-xs text-gray-400 mb-1">Tanggal Daftar</label>
+                    <label class="block text-xs text-gray-400 mb-1">Tanggal Awal</label>
                     <input type="date" name="tanggal_daftar" id="editMemberTanggalDaftar"
                            class="date-input w-full px-4 py-2 rounded-xl bg-[#020617]
                                   border border-white/10 text-white">

@@ -6,14 +6,27 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Workout;
+use Carbon\Carbon;
 
 class MemberWorkoutController extends Controller
 {
+    private function checkMemberStatus($member)
+    {
+        if (!$member) return false;
+        $aktifHingga = $member->aktif_hingga ? Carbon::parse($member->aktif_hingga) : null;
+        return $aktifHingga && ($aktifHingga->isFuture() || $aktifHingga->isToday());
+    }
     /**
      * Form input latihan
      */
     public function create()
     {
+        $member = Auth::user()->member;
+
+        if (!$this->checkMemberStatus($member)) {
+            return redirect()->route('member.home')->with('error', 'Akses dibatasi. Silakan perpanjang keanggotaan Anda untuk mengakses fitur Latihan.');
+        }
+
         return view('member.workouts.create', [
             'title'    => 'Input Latihan',
             'workouts' => Workout::orderBy('nama_latihan')->get(),

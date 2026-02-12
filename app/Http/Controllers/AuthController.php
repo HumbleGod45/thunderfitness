@@ -61,10 +61,9 @@ class AuthController extends Controller
         $data = $request->validate([
             'email'            => ['required', 'email', 'unique:users,email'],
             'password'         => ['required', 'min:6', 'confirmed'],
-
             'nama'             => ['required', 'string', 'max:255'],
             'tanggal_lahir'    => ['nullable', 'date'],
-            'jenis_kelamin'   => ['nullable', 'string', 'max:20'],
+            'jenis_kelamin'   => ['nullable', 'string', 'max:20', 'before_or_equal:' . now()->subYears(15)->toDateString()],
             'alamat'           => ['nullable', 'string', 'max:255'],
             'telp'             => ['nullable', 'string', 'max:20'],
             'tinggi_badan'     => ['nullable', 'integer'],
@@ -115,5 +114,29 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+    public function updatePasswordSimple(Request $request)
+    {
+    // 1. Validasi input
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required|min:6|confirmed',
+        ], [
+            'email.exists' => 'Email tidak terdaftar di sistem.',
+            'password.confirmed' => 'Konfirmasi password tidak cocok.'
+        ]);
+
+        // 2. Cari user berdasarkan email dan update password-nya
+        $user = User::where('email', $request->email)->first();
+    
+        if ($user) {
+            $user->update([
+                'password' => Hash::make($request->password)
+            ]);
+
+            return back()->with('status', 'Password berhasil diperbarui. Silakan login kembali.');
+        }
+
+        return back()->withErrors(['email' => 'Gagal memperbarui password.']);
     }
 }
